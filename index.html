@@ -7,317 +7,182 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0f;
-    --surface: #13131a;
-    --surface2: #1c1c27;
-    --border: rgba(255,255,255,0.08);
-    --border2: rgba(255,255,255,0.15);
-    --accent: #e8ff47;
-    --accent-dim: rgba(232,255,71,0.12);
-    --red: #ff4757;
-    --red-dim: rgba(255,71,87,0.15);
-    --orange: #ff9f43;
-    --orange-dim: rgba(255,159,67,0.15);
-    --text: #f0f0f8;
-    --muted: #7a7a94;
-    --radius: 14px;
-    --radius-sm: 8px;
+    --bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c27;
+    --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.15);
+    --accent:#e8ff47;--accent-dim:rgba(232,255,71,0.12);
+    --red:#ff4757;--red-dim:rgba(255,71,87,0.15);
+    --orange:#ff9f43;--orange-dim:rgba(255,159,67,0.15);
+    --text:#f0f0f8;--muted:#7a7a94;--radius:14px;--radius-sm:8px;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem 1rem 3rem;
-    overflow-x: hidden;
-  }
-  body::before {
-    content: '';
-    position: fixed;
-    top: -200px; left: 50%;
-    transform: translateX(-50%);
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(232,255,71,0.06) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(2rem, 6vw, 3.2rem);
-    letter-spacing: -1px;
-    color: var(--accent);
-    text-align: center;
-    margin-bottom: 0.25rem;
-    position: relative;
-    z-index: 1;
-  }
-  .logo span { color: var(--red); }
-  .tagline {
-    color: var(--muted);
-    font-size: 0.88rem;
-    text-align: center;
-    margin-bottom: 2.5rem;
-    font-style: italic;
-    position: relative;
-    z-index: 1;
-  }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 2rem;
-    width: 100%;
-    max-width: 460px;
-    position: relative;
-    z-index: 1;
-  }
-  .card + .card { margin-top: 1rem; }
-  h2 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--text);
-    margin-bottom: 1.25rem;
-    letter-spacing: 0.03em;
-  }
-  label {
-    display: block;
-    font-size: 0.8rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.4rem;
-  }
-  input, select, textarea {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    border-radius: var(--radius-sm);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1rem;
-    padding: 0.7rem 1rem;
-    outline: none;
-    transition: border-color 0.2s;
-    appearance: none;
-  }
-  input:focus, select:focus { border-color: var(--accent); }
-  input::placeholder { color: var(--muted); }
-  .form-group { margin-bottom: 1rem; }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.5rem;
-    border-radius: var(--radius-sm);
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    border: none;
-    transition: all 0.18s;
-    text-transform: uppercase;
-  }
-  .btn-primary { background: var(--accent); color: #0a0a0f; width: 100%; }
-  .btn-primary:hover { background: #f5ff6e; transform: translateY(-1px); }
-  .btn-primary:active { transform: translateY(0); }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-  .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border2); width: 100%; }
-  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-danger { background: var(--red); color: #fff; }
-  .btn-danger:hover { background: #ff6070; }
-  .btn-sm { padding: 0.35rem 0.75rem; font-size: 0.75rem; width: auto; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;padding:1.5rem 1rem 3rem;overflow-x:hidden;}
+  body::before{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);
+    width:600px;height:600px;background:radial-gradient(circle,rgba(232,255,71,0.06) 0%,transparent 70%);
+    pointer-events:none;z-index:0;}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,6vw,3.2rem);
+    letter-spacing:-1px;color:var(--accent);text-align:center;margin-bottom:0.25rem;position:relative;z-index:1;}
+  .logo span{color:var(--red);}
+  .tagline{color:var(--muted);font-size:0.88rem;text-align:center;margin-bottom:2.5rem;font-style:italic;position:relative;z-index:1;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:2rem;width:100%;max-width:460px;position:relative;z-index:1;}
+  .card+.card{margin-top:1rem;}
+  h2{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:var(--text);margin-bottom:1.25rem;letter-spacing:0.03em;}
+  label{display:block;font-size:0.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;}
+  input,select,textarea{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);
+    color:var(--text);font-family:'DM Sans',sans-serif;font-size:1rem;padding:0.7rem 1rem;outline:none;transition:border-color 0.2s;appearance:none;}
+  input:focus,select:focus{border-color:var(--accent);}
+  input::placeholder{color:var(--muted);}
+  .form-group{margin-bottom:1rem;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.8rem 1.5rem;
+    border-radius:var(--radius-sm);font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;
+    letter-spacing:0.04em;cursor:pointer;border:none;transition:all 0.18s;text-transform:uppercase;}
+  .btn-primary{background:var(--accent);color:#0a0a0f;width:100%;}
+  .btn-primary:hover{background:#f5ff6e;transform:translateY(-1px);}
+  .btn-primary:active{transform:translateY(0);}
+  .btn-primary:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+  .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border2);width:100%;}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+  .screen{display:none;width:100%;max-width:460px;position:relative;z-index:1;}
+  .screen.active{display:flex;flex-direction:column;}
 
-  .screen { display: none; width: 100%; max-width: 460px; position: relative; z-index: 1; }
-  .screen.active { display: flex; flex-direction: column; }
+  /* Setup / firebase config screen */
+  .setup-card{background:var(--surface2);border:1px solid rgba(232,255,71,0.25);border-radius:var(--radius);
+    padding:1.5rem;margin-bottom:1.5rem;}
+  .setup-step{display:flex;gap:0.75rem;align-items:flex-start;margin-bottom:1rem;}
+  .step-num{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--accent);
+    width:28px;flex-shrink:0;padding-top:0.1rem;}
+  .step-body{flex:1;}
+  .step-title{font-weight:500;font-size:0.92rem;margin-bottom:0.2rem;}
+  .step-desc{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+  .step-desc a{color:var(--accent);text-decoration:none;}
+  .step-desc a:hover{text-decoration:underline;}
+  .config-input{font-family:'DM Sans',monospace;font-size:0.78rem;padding:0.5rem 0.75rem;}
+  .config-section{margin-top:0.5rem;}
+  .config-row{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.5rem;}
+  .config-row .form-group{margin:0;}
+  .connected-badge{display:inline-flex;align-items:center;gap:0.4rem;
+    background:rgba(29,158,117,0.15);border:1px solid rgba(29,158,117,0.3);
+    color:#1d9e75;border-radius:100px;font-size:0.75rem;font-weight:600;
+    padding:0.2rem 0.75rem;letter-spacing:0.06em;}
+  .error-badge{display:inline-flex;align-items:center;gap:0.4rem;
+    background:var(--red-dim);border:1px solid rgba(255,71,87,0.3);
+    color:var(--red);border-radius:100px;font-size:0.75rem;font-weight:600;
+    padding:0.2rem 0.75rem;letter-spacing:0.06em;}
 
-  .room-code-display {
-    text-align: center;
-    padding: 1.5rem;
-    background: var(--accent-dim);
-    border: 1px solid rgba(232,255,71,0.3);
-    border-radius: var(--radius);
-    margin-bottom: 1.5rem;
-  }
-  .room-code-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
-  .room-code { font-family: 'Syne', sans-serif; font-size: 2.8rem; font-weight: 800; color: var(--accent); letter-spacing: 0.2em; }
-  .copy-hint { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; cursor: pointer; }
-  .copy-hint:hover { color: var(--accent); }
+  .room-code-display{text-align:center;padding:1.5rem;background:var(--accent-dim);
+    border:1px solid rgba(232,255,71,0.3);border-radius:var(--radius);margin-bottom:1.5rem;}
+  .room-code-label{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .room-code{font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;color:var(--accent);letter-spacing:0.2em;}
+  .copy-hint{font-size:0.78rem;color:var(--muted);margin-top:0.25rem;cursor:pointer;}
+  .copy-hint:hover{color:var(--accent);}
 
-  /* Players list with kick/ban */
-  .players-grid { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; }
-  .player-chip {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 0.55rem 0.85rem;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: border-color 0.2s;
-  }
-  .player-chip.me { border-color: rgba(232,255,71,0.4); }
-  .player-chip.banned { opacity: 0.4; text-decoration: line-through; }
-  .player-name-area { flex: 1; display: flex; align-items: center; gap: 0.4rem; }
-  .player-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-  .player-dot.other { background: var(--muted); }
-  .player-actions { display: flex; gap: 0.35rem; }
-  .kick-btn {
-    background: var(--orange-dim);
-    border: 1px solid rgba(255,159,67,0.3);
-    color: var(--orange);
-    border-radius: 6px;
-    padding: 0.25rem 0.55rem;
-    font-size: 0.7rem;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: all 0.15s;
-  }
-  .kick-btn:hover { background: var(--orange); color: #000; }
-  .ban-btn {
-    background: var(--red-dim);
-    border: 1px solid rgba(255,71,87,0.3);
-    color: var(--red);
-    border-radius: 6px;
-    padding: 0.25rem 0.55rem;
-    font-size: 0.7rem;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: all 0.15s;
-  }
-  .ban-btn:hover { background: var(--red); color: #fff; }
+  .players-grid{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.25rem;}
+  .player-chip{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);
+    padding:0.55rem 0.85rem;font-size:0.9rem;display:flex;align-items:center;gap:0.5rem;transition:border-color 0.2s;}
+  .player-chip.me{border-color:rgba(232,255,71,0.4);}
+  .player-name-area{flex:1;display:flex;align-items:center;gap:0.4rem;}
+  .player-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+  .player-dot.other{background:var(--muted);}
+  .player-actions{display:flex;gap:0.35rem;}
+  .kick-btn{background:var(--orange-dim);border:1px solid rgba(255,159,67,0.3);color:var(--orange);
+    border-radius:6px;padding:0.25rem 0.55rem;font-size:0.7rem;font-family:'Syne',sans-serif;
+    font-weight:700;cursor:pointer;letter-spacing:0.05em;transition:all 0.15s;}
+  .kick-btn:hover{background:var(--orange);color:#000;}
+  .ban-btn{background:var(--red-dim);border:1px solid rgba(255,71,87,0.3);color:var(--red);
+    border-radius:6px;padding:0.25rem 0.55rem;font-size:0.7rem;font-family:'Syne',sans-serif;
+    font-weight:700;cursor:pointer;letter-spacing:0.05em;transition:all 0.15s;}
+  .ban-btn:hover{background:var(--red);color:#fff;}
 
-  .waiting-for { font-size: 0.8rem; color: var(--muted); text-align: center; margin-bottom: 1rem; }
-  .status-bar {
-    display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.82rem; color: var(--muted);
-    margin-bottom: 1.5rem; padding: 0.6rem 1rem;
-    background: var(--surface2); border-radius: var(--radius-sm);
-  }
-  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s ease-in-out infinite; flex-shrink: 0; }
-  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+  .waiting-for{font-size:0.8rem;color:var(--muted);text-align:center;margin-bottom:1rem;}
+  .status-bar{display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:var(--muted);
+    margin-bottom:1.5rem;padding:0.6rem 1rem;background:var(--surface2);border-radius:var(--radius-sm);}
+  .pulse{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.5s ease-in-out infinite;flex-shrink:0;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);}}
 
-  /* Continuation banner */
-  .continue-banner {
-    background: var(--orange-dim);
-    border: 1px solid rgba(255,159,67,0.35);
-    border-radius: var(--radius-sm);
-    padding: 0.85rem 1rem;
-    font-size: 0.85rem;
-    color: var(--orange);
-    line-height: 1.5;
-    margin-bottom: 1.25rem;
-    display: flex;
-    gap: 0.5rem;
-    align-items: flex-start;
-  }
+  .continue-banner{background:var(--orange-dim);border:1px solid rgba(255,159,67,0.35);
+    border-radius:var(--radius-sm);padding:0.85rem 1rem;font-size:0.85rem;color:var(--orange);
+    line-height:1.5;margin-bottom:1.25rem;display:flex;gap:0.5rem;align-items:flex-start;}
 
-  /* Word reveal */
-  .word-reveal-container { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; padding: 1rem 0; }
-  .role-badge { font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; padding: 0.35rem 1rem; border-radius: 100px; }
-  .role-badge.innocent { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(232,255,71,0.3); }
-  .role-badge.impostor { background: var(--red-dim); color: var(--red); border: 1px solid rgba(255,71,87,0.3); }
-  .word-card {
-    width: 100%; background: var(--surface2); border-radius: var(--radius);
-    padding: 2.5rem 2rem; text-align: center; border: 1px solid var(--border2);
-    position: relative; overflow: hidden;
-  }
-  .word-card.impostor-card { border-color: rgba(255,71,87,0.3); }
-  .word-card::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 50% -30%, rgba(232,255,71,0.07), transparent 60%); }
-  .word-card.impostor-card::before { background: radial-gradient(ellipse at 50% -30%, rgba(255,71,87,0.07), transparent 60%); }
-  .word-emoji { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
-  .word-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
-  .word-value { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 8vw, 3rem); font-weight: 800; color: var(--accent); letter-spacing: -0.02em; line-height: 1; }
-  .word-card.impostor-card .word-value { color: var(--red); }
-  .impostor-hint { margin-top: 1rem; font-size: 0.82rem; color: var(--red); font-style: italic; }
-  .privacy-note {
-    display: flex; align-items: flex-start; gap: 0.5rem;
-    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 0.75rem 1rem;
-    font-size: 0.82rem; color: var(--muted); line-height: 1.5;
-  }
-  .privacy-note svg { flex-shrink: 0; margin-top: 1px; }
+  .word-reveal-container{display:flex;flex-direction:column;align-items:center;gap:1.5rem;padding:1rem 0;}
+  .role-badge{font-size:0.78rem;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;
+    padding:0.35rem 1rem;border-radius:100px;}
+  .role-badge.innocent{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(232,255,71,0.3);}
+  .role-badge.impostor{background:var(--red-dim);color:var(--red);border:1px solid rgba(255,71,87,0.3);}
+  .word-card{width:100%;background:var(--surface2);border-radius:var(--radius);padding:2.5rem 2rem;
+    text-align:center;border:1px solid var(--border2);position:relative;overflow:hidden;}
+  .word-card.impostor-card{border-color:rgba(255,71,87,0.3);}
+  .word-card::before{content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 50% -30%,rgba(232,255,71,0.07),transparent 60%);}
+  .word-card.impostor-card::before{background:radial-gradient(ellipse at 50% -30%,rgba(255,71,87,0.07),transparent 60%);}
+  .word-emoji{font-size:2.5rem;margin-bottom:0.75rem;display:block;}
+  .word-label{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;}
+  .word-value{font-family:'Syne',sans-serif;font-size:clamp(2rem,8vw,3rem);font-weight:800;
+    color:var(--accent);letter-spacing:-0.02em;line-height:1;}
+  .word-card.impostor-card .word-value{color:var(--red);}
+  .impostor-hint{margin-top:1rem;font-size:0.82rem;color:var(--red);font-style:italic;}
+  .privacy-note{display:flex;align-items:flex-start;gap:0.5rem;background:rgba(255,255,255,0.04);
+    border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.75rem 1rem;
+    font-size:0.82rem;color:var(--muted);line-height:1.5;}
+  .privacy-note svg{flex-shrink:0;margin-top:1px;}
 
-  /* Vote */
-  .vote-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
-  .vote-item {
-    display: flex; align-items: center; justify-content: space-between;
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 0.8rem 1rem;
-    cursor: pointer; transition: all 0.18s;
-  }
-  .vote-item:hover { border-color: var(--border2); }
-  .vote-item.selected { border-color: var(--red); background: var(--red-dim); }
-  .vote-item.voted-by-me { opacity: 0.7; cursor: not-allowed; }
-  .vote-item.no-pointer { cursor: default; }
-  .vote-name { font-size: 0.95rem; font-weight: 500; }
-  .vote-count { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--muted); }
-  .vote-bar { height: 3px; background: var(--red); border-radius: 2px; margin-top: 0.4rem; transition: width 0.4s; }
+  .vote-list{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.5rem;}
+  .vote-item{display:flex;align-items:center;justify-content:space-between;background:var(--surface2);
+    border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.8rem 1rem;cursor:pointer;transition:all 0.18s;}
+  .vote-item:hover{border-color:var(--border2);}
+  .vote-item.selected{border-color:var(--red);background:var(--red-dim);}
+  .vote-item.voted-by-me{opacity:0.7;cursor:not-allowed;}
+  .vote-item.no-pointer{cursor:default;}
+  .vote-name{font-size:0.95rem;font-weight:500;}
+  .vote-count{display:flex;align-items:center;gap:0.4rem;font-size:0.82rem;color:var(--muted);}
+  .vote-bar{height:3px;background:var(--red);border-radius:2px;margin-top:0.4rem;transition:width 0.4s;}
 
-  /* Results */
-  .result-hero { text-align: center; padding: 2rem 1rem; }
-  .result-icon { font-size: 4rem; margin-bottom: 1rem; }
-  .result-title { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
-  .result-sub { font-size: 0.95rem; color: var(--muted); margin-bottom: 1.5rem; }
-  .reveal-word-box { background: var(--surface2); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1.5rem; text-align: center; }
-  .reveal-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
-  .reveal-word { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent); }
-  .impostor-reveal { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; text-align: center; }
-  .impostor-reveal strong { color: var(--red); }
+  .result-hero{text-align:center;padding:2rem 1rem;}
+  .result-icon{font-size:4rem;margin-bottom:1rem;}
+  .result-title{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:0.5rem;}
+  .result-sub{font-size:0.95rem;color:var(--muted);margin-bottom:1.5rem;}
+  .reveal-word-box{background:var(--surface2);border-radius:var(--radius);padding:1.25rem;margin-bottom:1.5rem;text-align:center;}
+  .reveal-label{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.4rem;}
+  .reveal-word{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--accent);}
+  .impostor-reveal{font-size:0.9rem;color:var(--muted);margin-bottom:1.5rem;text-align:center;}
+  .impostor-reveal strong{color:var(--red);}
 
-  /* Settings */
-  .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1rem; }
-  .mini-tag {
-    display: inline-flex; align-items: center;
-    background: var(--accent-dim); color: var(--accent);
-    border-radius: 100px; font-size: 0.72rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.08em; padding: 0.2rem 0.6rem; margin-left: 0.4rem;
-  }
-  .timer-display { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--accent); text-align: center; margin-bottom: 0.75rem; }
-  .toast {
-    position: fixed; bottom: 2rem; left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: var(--text); color: var(--bg);
-    padding: 0.75rem 1.5rem; border-radius: 100px;
-    font-size: 0.9rem; font-weight: 500; transition: transform 0.3s ease;
-    z-index: 1000; white-space: nowrap;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); }
-  .phase-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; text-align: center; margin-bottom: 0.5rem; }
-  .phase-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; text-align: center; margin-bottom: 1.25rem; }
-  .input-row { display: flex; gap: 0.6rem; }
-  .input-row input { flex: 1; }
-  .input-row .btn { width: auto; padding: 0.7rem 1.25rem; font-size: 0.85rem; }
-  .word-categories textarea { font-size: 0.85rem; min-height: 80px; resize: vertical; }
+  .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:1rem;}
+  .mini-tag{display:inline-flex;align-items:center;background:var(--accent-dim);color:var(--accent);
+    border-radius:100px;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;
+    padding:0.2rem 0.6rem;margin-left:0.4rem;}
+  .timer-display{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);
+    text-align:center;margin-bottom:0.75rem;}
+  .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);
+    background:var(--text);color:var(--bg);padding:0.75rem 1.5rem;border-radius:100px;
+    font-size:0.9rem;font-weight:500;transition:transform 0.3s ease;z-index:1000;white-space:nowrap;}
+  .toast.show{transform:translateX(-50%) translateY(0);}
+  .phase-label{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;text-align:center;margin-bottom:0.5rem;}
+  .phase-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:1.25rem;}
+  .input-row{display:flex;gap:0.6rem;}
+  .input-row input{flex:1;}
+  .input-row .btn{width:auto;padding:0.7rem 1.25rem;font-size:0.85rem;}
+  textarea.word-categories{font-size:0.85rem;min-height:80px;resize:vertical;}
 
-  /* Kicked/banned overlay */
-  .kicked-overlay {
-    position: fixed; inset: 0;
-    background: var(--bg);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    z-index: 999; gap: 1rem; padding: 2rem;
-    display: none;
-  }
-  .kicked-overlay.show { display: flex; }
-  .kicked-icon { font-size: 4rem; }
-  .kicked-title { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--red); text-align: center; }
-  .kicked-sub { color: var(--muted); text-align: center; font-size: 0.95rem; }
+  .kicked-overlay{position:fixed;inset:0;background:var(--bg);display:none;flex-direction:column;
+    align-items:center;justify-content:center;z-index:999;gap:1rem;padding:2rem;}
+  .kicked-overlay.show{display:flex;}
+  .kicked-icon{font-size:4rem;}
+  .kicked-title{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--red);text-align:center;}
+  .kicked-sub{color:var(--muted);text-align:center;font-size:0.95rem;}
 
-  @media (max-width: 500px) {
-    .card { padding: 1.5rem; }
-    .settings-grid { grid-template-columns: 1fr; }
+  .loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;z-index:998;gap:1rem;}
+  .loading-overlay.hide{display:none;}
+  .spinner{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--accent);
+    border-radius:50%;animation:spin 0.8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .loading-text{font-size:0.88rem;color:var(--muted);}
+
+  @media(max-width:500px){
+    .card{padding:1.5rem;}
+    .settings-grid{grid-template-columns:1fr;}
+    .config-row{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -326,9 +191,73 @@
 <div class="logo">EL <span>IMPOS</span>TOR</div>
 <p class="tagline">Todos conocen la palabra — excepto uno.</p>
 
-<!-- SCREEN: HOME -->
-<div class="screen active" id="screen-home">
+<!-- LOADING -->
+<div class="loading-overlay hide" id="loading-overlay">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loading-text">Conectando...</div>
+</div>
+
+<!-- SCREEN: SETUP (Firebase config) -->
+<div class="screen active" id="screen-setup">
   <div class="card">
+    <h2>Configuración inicial</h2>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6;">
+      Para jugar online desde cualquier parte necesitas conectar tu propia base de datos gratuita de Firebase.
+      Solo hay que hacerlo una vez — los datos se guardan en el navegador.
+    </p>
+
+    <div class="setup-card">
+      <div class="setup-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Crea un proyecto en Firebase</div>
+          <div class="step-desc">Ve a <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a> → "Añadir proyecto" → pon un nombre → desactiva Analytics → Crear proyecto.</div>
+        </div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Activa Realtime Database</div>
+          <div class="step-desc">En el menú lateral: Compilación → Realtime Database → Crear base de datos → elige región → modo de prueba (test mode) → Listo.</div>
+        </div>
+      </div>
+      <div class="setup-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Copia tu configuración</div>
+          <div class="step-desc">En Configuración del proyecto (⚙️) → Tus apps → Web (&lt;/&gt;) → Registra la app → copia los valores del objeto <code>firebaseConfig</code>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="config-section">
+      <div class="form-group">
+        <label>API Key</label>
+        <input type="text" id="cfg-apikey" class="config-input" placeholder="AIzaSy...">
+      </div>
+      <div class="form-group">
+        <label>Database URL</label>
+        <input type="text" id="cfg-dburl" class="config-input" placeholder="https://tu-proyecto-default-rtdb.firebaseio.com">
+      </div>
+      <div class="config-row">
+        <div class="form-group">
+          <label>Project ID</label>
+          <input type="text" id="cfg-projectid" class="config-input" placeholder="tu-proyecto">
+        </div>
+        <div class="form-group">
+          <label>Auth Domain</label>
+          <input type="text" id="cfg-authdomain" class="config-input" placeholder="tu-proyecto.firebaseapp.com">
+        </div>
+      </div>
+      <div id="cfg-status" style="margin-bottom:1rem;min-height:24px;"></div>
+      <button class="btn btn-primary" onclick="connectFirebase()">Conectar y guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: HOME -->
+<div class="screen" id="screen-home">
+  <div class="card" style="margin-bottom:1rem;">
     <h2>Crear sala</h2>
     <div class="form-group">
       <label>Tu nombre</label>
@@ -336,7 +265,7 @@
     </div>
     <button class="btn btn-primary" onclick="createRoom()">Crear sala nueva</button>
   </div>
-  <div class="card">
+  <div class="card" style="margin-bottom:1rem;">
     <h2>Unirse a sala</h2>
     <div class="form-group">
       <label>Tu nombre</label>
@@ -345,11 +274,13 @@
     <div class="form-group">
       <label>Código de sala</label>
       <div class="input-row">
-        <input type="text" id="join-code" placeholder="ej. ABC12" maxlength="5" style="text-transform:uppercase;letter-spacing:0.1em;font-family:'Syne',sans-serif;font-weight:700;">
-        <button class="btn btn-ghost" onclick="joinRoom()" style="width:auto;padding:0.7rem 1.25rem;font-size:0.85rem;">Entrar</button>
+        <input type="text" id="join-code" placeholder="ej. ABC12" maxlength="5"
+          style="text-transform:uppercase;letter-spacing:0.1em;font-family:'Syne',sans-serif;font-weight:700;">
+        <button class="btn-ghost btn" onclick="joinRoom()" style="width:auto;padding:0.7rem 1.25rem;font-size:0.85rem;">Entrar</button>
       </div>
     </div>
   </div>
+  <button class="btn-ghost btn" onclick="reconfigure()" style="font-size:0.8rem;opacity:0.6;">⚙ Cambiar configuración Firebase</button>
 </div>
 
 <!-- SCREEN: LOBBY (host) -->
@@ -361,12 +292,8 @@
   </div>
   <div class="card" style="margin-bottom:1rem;">
     <h2>Jugadores <span id="player-count-label" class="mini-tag">0</span></h2>
-    <div class="status-bar">
-      <div class="pulse"></div>
-      <span id="lobby-status">Esperando jugadores...</span>
-    </div>
+    <div class="status-bar"><div class="pulse"></div><span id="lobby-status">Esperando jugadores...</span></div>
     <div class="players-grid" id="lobby-players"></div>
-    <div class="waiting-for" id="waiting-for-text"></div>
   </div>
   <div class="card" style="margin-bottom:1rem;">
     <h2>Configuración</h2>
@@ -391,7 +318,7 @@
     </div>
     <div class="form-group" style="margin-top:0.6rem;">
       <label>Palabras personalizadas (opcional)</label>
-      <textarea class="word-categories" id="custom-words" placeholder="Escribe palabras separadas por coma, ej: Pizza, Montaña, Fútbol, Guitarra..."></textarea>
+      <textarea class="word-categories" id="custom-words" placeholder="Escribe palabras separadas por coma..."></textarea>
     </div>
   </div>
   <button class="btn btn-primary" id="start-btn" onclick="startGame()" disabled>Iniciar juego</button>
@@ -405,15 +332,12 @@
   </div>
   <div class="card">
     <h2>Esperando al anfitrión...</h2>
-    <div class="status-bar">
-      <div class="pulse"></div>
-      <span>El host iniciará la partida pronto</span>
-    </div>
+    <div class="status-bar"><div class="pulse"></div><span>El host iniciará la partida pronto</span></div>
     <div class="players-grid" id="waiting-players"></div>
   </div>
 </div>
 
-<!-- SCREEN: WORD REVEAL -->
+<!-- SCREEN: REVEAL -->
 <div class="screen" id="screen-reveal">
   <div class="card">
     <div class="phase-label">Tu rol esta ronda</div>
@@ -438,39 +362,32 @@
 <div class="screen" id="screen-debate">
   <div class="card" style="margin-bottom:1rem;">
     <div class="phase-label">Fase de debate</div>
-    <div class="phase-title" id="debate-title">¿Quién es el impostor?</div>
+    <div class="phase-title">¿Quién es el impostor?</div>
     <div class="timer-display" id="debate-timer"></div>
     <div id="continue-banner" class="continue-banner" style="display:none;">
-      <span>⚠️</span>
-      <span id="continue-banner-text">Un inocente fue eliminado. El impostor sigue vivo — ¡seguid debatiendo!</span>
+      <span>⚠️</span><span id="continue-banner-text">Un inocente fue eliminado.</span>
     </div>
     <div class="privacy-note" style="margin-bottom:1rem;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span id="debate-hint">Da pistas sobre la palabra sin decirla. El impostor intentará camuflarse. Cuando estén listos, voten.</span>
+      <span>Da pistas sobre la palabra sin decirla. Cuando estén listos, el anfitrión abre la votación.</span>
     </div>
-    <div class="status-bar">
-      <div class="pulse"></div>
-      <span id="ready-count">Esperando que todos estén listos...</span>
-    </div>
+    <div class="status-bar"><div class="pulse"></div><span id="ready-count">Esperando...</span></div>
   </div>
   <button class="btn btn-primary" id="go-vote-btn" onclick="goToVote()" disabled>Ir a votar</button>
 </div>
 
-<!-- SCREEN: VOTING -->
+<!-- SCREEN: VOTE -->
 <div class="screen" id="screen-vote">
   <div class="card">
     <div class="phase-label">Votación</div>
     <div class="phase-title">¿Quién es el impostor?</div>
-    <div class="status-bar" id="vote-status-bar">
-      <div class="pulse"></div>
-      <span id="vote-status-text">Elige a tu sospechoso</span>
-    </div>
+    <div class="status-bar"><div class="pulse"></div><span id="vote-status-text">Elige a tu sospechoso</span></div>
     <div class="vote-list" id="vote-list"></div>
     <div class="waiting-for" id="vote-waiting"></div>
   </div>
 </div>
 
-<!-- SCREEN: VOTE RESULT (elimination step before results or continuation) -->
+<!-- SCREEN: ELIMINATION -->
 <div class="screen" id="screen-elimination">
   <div class="card" style="margin-bottom:1rem;">
     <div class="result-hero">
@@ -480,8 +397,7 @@
     </div>
     <div class="vote-list" id="elim-tally"></div>
     <div id="elim-continue-box" style="display:none;" class="continue-banner">
-      <span>⚠️</span>
-      <span id="elim-continue-text"></span>
+      <span>⚠️</span><span id="elim-continue-text"></span>
     </div>
   </div>
   <button class="btn btn-primary" id="elim-next-btn" onclick="afterElimination()" style="display:none;"></button>
@@ -504,7 +420,7 @@
     <div class="vote-list" id="result-vote-tally"></div>
   </div>
   <button class="btn btn-primary" id="play-again-btn" onclick="playAgain()" style="display:none;">Jugar otra ronda</button>
-  <button class="btn btn-ghost" onclick="leaveGame()" style="margin-top:0.6rem;">Salir</button>
+  <button class="btn-ghost btn" onclick="leaveGame()" style="margin-top:0.6rem;">Salir</button>
 </div>
 
 <!-- KICKED OVERLAY -->
@@ -512,267 +428,381 @@
   <div class="kicked-icon" id="kicked-icon">🚫</div>
   <div class="kicked-title" id="kicked-title">Has sido expulsado</div>
   <div class="kicked-sub" id="kicked-sub">El anfitrión te ha echado de la sala.</div>
-  <button class="btn btn-ghost" style="max-width:220px;margin-top:1rem;" onclick="dismissKick()">Volver al inicio</button>
+  <button class="btn-ghost btn" style="max-width:220px;margin-top:1rem;" onclick="dismissKick()">Volver al inicio</button>
 </div>
 
 <div class="toast" id="toast"></div>
 
+<!-- Firebase SDK v9 compat -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
 <script>
-// ==================== WORD BANK ====================
+// ============================================================
+//  WORD BANK
+// ============================================================
 const DEFAULT_WORDS = [
   "Pizza","Playa","Montaña","Guitarra","Avión","Dentista","Circo","Pirata",
   "Volcán","Tortuga","Helicóptero","Biblioteca","Submarino","Jardín","Carnaval",
   "Médico","Castillo","Dinosaurio","Cohete","Mariposa","Fútbol","Chef","Vampiro",
   "Mago","Elefante","Cactus","Igloo","Momia","Sirena","Robot","Fantasma","Bruja",
   "Tiburón","Unicornio","Dragón","Piñata","Maratón","Astronauta","Samurai",
-  "Ninja","Granjero","Detective","Paleontólogo","Espadachín","Marinero","Bombero",
-  "Panadero","Pintor","Violinista","Sombrero","Microscopio","Volcán","Canguro"
+  "Ninja","Granjero","Detective","Espadachín","Marinero","Bombero",
+  "Panadero","Pintor","Violinista","Sombrero","Microscopio","Canguro"
 ];
 
-// ==================== STATE ====================
+// ============================================================
+//  STATE
+// ============================================================
 let state = {
-  playerId: null,
-  playerName: null,
-  roomCode: null,
-  isHost: false,
-  gameData: null,
-  myRole: null,
-  voted: false,
-  voteFor: null,
-  debateTimer: null,
-  debateTimerRemaining: 0,
+  playerId: null, playerName: null, roomCode: null,
+  isHost: false, myRole: null,
+  voted: false, voteFor: null,
   ready: false,
-  eliminationRound: 0,
+  debateTimer: null, debateTimerRemaining: 0,
 };
 
-// ==================== LOCAL DB ====================
-const BC = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('impostor_game') : null;
-const DB_KEY = 'impostor_rooms';
+// ============================================================
+//  FIREBASE
+// ============================================================
+let db = null;
+let roomRef = null;
+let roomListener = null;
 
-function getDB() { try { return JSON.parse(localStorage.getItem(DB_KEY) || '{}'); } catch { return {}; } }
-function setDB(data) {
-  localStorage.setItem(DB_KEY, JSON.stringify(data));
-  if (BC) BC.postMessage({ type: 'update', code: state.roomCode });
+const LS_CFG = 'impostor_fb_cfg';
+
+function loadConfig() {
+  try { return JSON.parse(localStorage.getItem(LS_CFG)); } catch { return null; }
 }
-function getRoom(code) { return getDB()[code] || null; }
-function setRoom(code, data) { const db=getDB(); db[code]=data; setDB(db); }
-function updateRoom(code, updater) { const db=getDB(); if(!db[code]) return; db[code]=updater(db[code]); setDB(db); }
-
-if (BC) { BC.onmessage = (e) => { if (e.data && e.data.code === state.roomCode) syncFromRoom(); }; }
-
-let pollInterval = null;
-function startPolling() { if(pollInterval) clearInterval(pollInterval); pollInterval = setInterval(syncFromRoom, 1000); }
-function stopPolling() { if(pollInterval) clearInterval(pollInterval); pollInterval = null; }
-
-// ==================== UTILS ====================
-function randomCode() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  return Array.from({length:5}, ()=>chars[Math.floor(Math.random()*chars.length)]).join('');
-}
-function randomId() { return Math.random().toString(36).slice(2,10); }
-function showScreen(id) { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById('screen-'+id).classList.add('active'); }
-function showToast(msg, dur=2500) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), dur); }
-function shuffle(arr) { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
-function formatTime(s) { return `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`; }
-
-// ==================== WIN CONDITION ====================
-// Impostor wins when innocents can no longer outvote them:
-// impostors_alive >= innocents_alive  →  impostor wins
-// Must eliminate until that condition is met
-function checkImpostorWin(room) {
-  const activePlayers = Object.values(room.players).filter(p => !p.eliminated);
-  const impostors = room.impostors || [];
-  const activeImpostors = activePlayers.filter(p => impostors.includes(p.id)).length;
-  const activeInnocents = activePlayers.length - activeImpostors;
-  // If impostors >= innocents, innocents can never get a majority → impostor wins
-  return activeImpostors >= activeInnocents;
+function saveConfig(cfg) {
+  localStorage.setItem(LS_CFG, JSON.stringify(cfg));
 }
 
-function allImpostorsEliminated(room) {
-  const activePlayers = Object.values(room.players).filter(p => !p.eliminated);
-  const impostors = room.impostors || [];
-  return impostors.every(pid => !activePlayers.find(p => p.id === pid));
-}
+function connectFirebase() {
+  const apiKey     = document.getElementById('cfg-apikey').value.trim();
+  const databaseURL= document.getElementById('cfg-dburl').value.trim();
+  const projectId  = document.getElementById('cfg-projectid').value.trim();
+  const authDomain = document.getElementById('cfg-authdomain').value.trim();
 
-// ==================== KICK / BAN ====================
-function kickPlayer(pid) {
-  const room = getRoom(state.roomCode);
-  if (!room || !state.isHost || pid === state.playerId) return;
-  const pname = room.players[pid]?.name || '?';
-  updateRoom(state.roomCode, r => {
-    if (r.players[pid]) r.players[pid].kicked = true;
-    return r;
-  });
-  showToast(`${pname} expulsado temporalmente`);
-}
+  if (!apiKey || !databaseURL || !projectId) {
+    setStatus('error','Completa al menos API Key, Database URL y Project ID.');
+    return;
+  }
 
-function banPlayer(pid) {
-  const room = getRoom(state.roomCode);
-  if (!room || !state.isHost || pid === state.playerId) return;
-  const pname = room.players[pid]?.name || '?';
-  updateRoom(state.roomCode, r => {
-    if (r.players[pid]) {
-      r.players[pid].banned = true;
-      r.players[pid].kicked = true;
-      if (!r.banned) r.banned = [];
-      r.banned.push(pid);
+  setStatus('loading','Conectando...');
+  try {
+    // Delete existing app if any
+    if (firebase.apps.length) {
+      firebase.apps.forEach(a => a.delete());
     }
-    return r;
-  });
-  showToast(`${pname} baneado de la sala 🚫`);
+  } catch(e){}
+
+  try {
+    firebase.initializeApp({ apiKey, databaseURL, projectId, authDomain: authDomain || projectId+'.firebaseapp.com' });
+    db = firebase.database();
+    // Test connection with a write
+    db.ref('.info/connected').once('value').then(snap => {
+      saveConfig({ apiKey, databaseURL, projectId, authDomain });
+      setStatus('ok','¡Conectado correctamente!');
+      setTimeout(() => showScreen('home'), 800);
+    }).catch(err => {
+      setStatus('error','Error de conexión: '+err.message);
+    });
+  } catch(err) {
+    setStatus('error','Error: '+err.message);
+  }
 }
 
-// ==================== CREATE ROOM ====================
-function createRoom() {
+function initFirebaseFromSaved() {
+  const cfg = loadConfig();
+  if (!cfg) return false;
+  try {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(cfg);
+    }
+    db = firebase.database();
+    return true;
+  } catch(e) { return false; }
+}
+
+function setStatus(type, msg) {
+  const el = document.getElementById('cfg-status');
+  if (type === 'ok') el.innerHTML = `<span class="connected-badge">✓ ${msg}</span>`;
+  else if (type === 'error') el.innerHTML = `<span class="error-badge">✗ ${msg}</span>`;
+  else el.innerHTML = `<span style="color:var(--muted);font-size:0.82rem;">${msg}</span>`;
+}
+
+function reconfigure() {
+  if (roomListener && roomRef) { roomRef.off('value', roomListener); roomListener = null; }
+  const cfg = loadConfig();
+  if (cfg) {
+    document.getElementById('cfg-apikey').value = cfg.apiKey || '';
+    document.getElementById('cfg-dburl').value = cfg.databaseURL || '';
+    document.getElementById('cfg-projectid').value = cfg.projectId || '';
+    document.getElementById('cfg-authdomain').value = cfg.authDomain || '';
+  }
+  showScreen('setup');
+}
+
+// ============================================================
+//  DB HELPERS  (all async, Firebase-backed)
+// ============================================================
+function roomPath(code) { return 'rooms/' + code; }
+
+async function getRoom(code) {
+  const snap = await db.ref(roomPath(code)).once('value');
+  return snap.val();
+}
+
+function updateRoom(code, updates) {
+  // updates = plain object of paths relative to room root → values
+  const prefixed = {};
+  Object.entries(updates).forEach(([k,v]) => { prefixed[roomPath(code)+'/'+k] = v; });
+  return db.ref().update(prefixed);
+}
+
+function setRoom(code, data) {
+  return db.ref(roomPath(code)).set(data);
+}
+
+function listenRoom(code, cb) {
+  if (roomListener && roomRef) roomRef.off('value', roomListener);
+  roomRef = db.ref(roomPath(code));
+  roomListener = roomRef.on('value', snap => {
+    const room = snap.val();
+    if (room) cb(room);
+  });
+}
+
+function stopListening() {
+  if (roomListener && roomRef) { roomRef.off('value', roomListener); roomListener = null; }
+}
+
+// ============================================================
+//  UTILS
+// ============================================================
+function randomCode() {
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  return Array.from({length:5},()=>chars[Math.floor(Math.random()*chars.length)]).join('');
+}
+function randomId() { return Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,6); }
+function showScreen(id) { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById('screen-'+id).classList.add('active'); }
+function showToast(msg,dur=2500) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),dur); }
+function showLoading(msg='Cargando...') { document.getElementById('loading-text').textContent=msg; document.getElementById('loading-overlay').classList.remove('hide'); }
+function hideLoading() { document.getElementById('loading-overlay').classList.add('hide'); }
+function shuffle(arr) { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function formatTime(s) { return Math.floor(s/60)+':'+(s%60).toString().padStart(2,'0'); }
+
+// ============================================================
+//  WIN CONDITION
+// ============================================================
+function checkImpostorWin(room) {
+  const active = Object.values(room.players).filter(p=>!p.eliminated && !p.banned);
+  const impostors = room.impostors || [];
+  const nImp = active.filter(p=>impostors.includes(p.id)).length;
+  const nInn = active.length - nImp;
+  return nImp >= nInn;
+}
+function allImpostorsEliminated(room) {
+  const active = Object.values(room.players).filter(p=>!p.eliminated && !p.banned);
+  return (room.impostors||[]).every(pid=>!active.find(p=>p.id===pid));
+}
+
+// ============================================================
+//  KICK / BAN
+// ============================================================
+async function kickPlayer(pid) {
+  if (!state.isHost || pid===state.playerId) return;
+  const room = await getRoom(state.roomCode);
+  const pname = room.players[pid]?.name||'?';
+  await updateRoom(state.roomCode, { [`players/${pid}/kicked`]: true });
+  showToast(`${pname} expulsado`);
+}
+async function banPlayer(pid) {
+  if (!state.isHost || pid===state.playerId) return;
+  const room = await getRoom(state.roomCode);
+  const pname = room.players[pid]?.name||'?';
+  const bans = room.bannedIds || [];
+  if (!bans.includes(pid)) bans.push(pid);
+  await updateRoom(state.roomCode, {
+    [`players/${pid}/kicked`]: true,
+    [`players/${pid}/banned`]: true,
+    'bannedIds': bans,
+  });
+  showToast(`${pname} baneado 🚫`);
+}
+
+// ============================================================
+//  CREATE ROOM
+// ============================================================
+async function createRoom() {
   const name = document.getElementById('host-name').value.trim();
   if (!name) { showToast('¡Escribe tu nombre!'); return; }
+  showLoading('Creando sala...');
+
   state.playerId = randomId();
   state.playerName = name;
   state.isHost = true;
-  state.voted = false;
-  state.ready = false;
-  let code; do { code = randomCode(); } while (getRoom(code));
+  state.voted = false; state.ready = false;
+
+  // Generate unique code
+  let code;
+  let attempts = 0;
+  do {
+    code = randomCode();
+    const existing = await getRoom(code);
+    if (!existing) break;
+    attempts++;
+  } while (attempts < 5);
+
   state.roomCode = code;
+
   const room = {
     code, host: state.playerId, phase: 'lobby',
     players: { [state.playerId]: { name, id: state.playerId, ready: false, voted: false, eliminated: false } },
     config: { impostors: 1, debateTime: 120 },
     word: null, impostors: [], votes: {}, readyCount: 0,
-    eliminationLog: [], banned: [], createdAt: Date.now(),
+    eliminationLog: [], bannedIds: [], createdAt: Date.now(),
   };
-  setRoom(code, room);
+
+  await setRoom(code, room);
   document.getElementById('display-code').textContent = code;
+  hideLoading();
   showScreen('lobby');
-  startPolling();
-  syncFromRoom();
+  listenRoom(code, onRoomUpdate);
 }
 
-// ==================== JOIN ROOM ====================
-function joinRoom() {
+// ============================================================
+//  JOIN ROOM
+// ============================================================
+async function joinRoom() {
   const name = document.getElementById('join-name').value.trim();
   const code = document.getElementById('join-code').value.trim().toUpperCase();
   if (!name) { showToast('¡Escribe tu nombre!'); return; }
   if (!code || code.length < 4) { showToast('Código inválido'); return; }
-  const room = getRoom(code);
-  if (!room) { showToast('Sala no encontrada. Verifica el código.'); return; }
-  if (room.phase !== 'lobby') { showToast('La partida ya empezó'); return; }
+
+  showLoading('Buscando sala...');
+  const room = await getRoom(code);
+  if (!room) { hideLoading(); showToast('Sala no encontrada. Verifica el código.'); return; }
+  if (room.phase !== 'lobby') { hideLoading(); showToast('La partida ya empezó'); return; }
+
   const pid = randomId();
-  // Check if banned (by name, simple heuristic)
-  if (room.banned && room.players) {
-    const bannedNames = room.banned.map(bid => room.players[bid]?.name?.toLowerCase()).filter(Boolean);
-    if (bannedNames.includes(name.toLowerCase())) {
-      showToast('Has sido baneado de esta sala 🚫'); return;
-    }
-  }
+  // Ban check
+  if (room.bannedIds && room.bannedIds.includes(pid)) { hideLoading(); showToast('Has sido baneado de esta sala 🚫'); return; }
+
   state.playerId = pid;
   state.playerName = name;
   state.isHost = false;
   state.roomCode = code;
-  state.voted = false;
-  state.ready = false;
-  updateRoom(code, r => {
-    r.players[pid] = { name, id: pid, ready: false, voted: false, eliminated: false };
-    return r;
+  state.voted = false; state.ready = false;
+
+  await updateRoom(code, {
+    [`players/${pid}`]: { name, id: pid, ready: false, voted: false, eliminated: false }
   });
+
   document.getElementById('display-code-guest').textContent = code;
+  hideLoading();
   showScreen('waiting');
-  startPolling();
-  syncFromRoom();
+  listenRoom(code, onRoomUpdate);
 }
 
 function copyCode() {
-  navigator.clipboard.writeText(state.roomCode).then(()=>showToast('¡Código copiado! 📋')).catch(()=>showToast('Código: '+state.roomCode));
+  navigator.clipboard.writeText(state.roomCode)
+    .then(()=>showToast('¡Código copiado! 📋'))
+    .catch(()=>showToast('Código: '+state.roomCode));
 }
 
-// ==================== START GAME ====================
-function startGame() {
-  const room = getRoom(state.roomCode);
-  const players = Object.values(room.players).filter(p => !p.banned);
+// ============================================================
+//  START GAME
+// ============================================================
+async function startGame() {
+  const room = await getRoom(state.roomCode);
+  const players = Object.values(room.players).filter(p=>!p.banned);
   if (players.length < 3) { showToast('Necesitas al menos 3 jugadores'); return; }
+
   const numImpostors = parseInt(document.getElementById('num-impostors').value);
-  const debateTime = parseInt(document.getElementById('debate-time').value);
-  const customWordsRaw = document.getElementById('custom-words').value.trim();
+  const debateTime   = parseInt(document.getElementById('debate-time').value);
+  const customRaw    = document.getElementById('custom-words').value.trim();
   let wordList = [...DEFAULT_WORDS];
-  if (customWordsRaw) {
-    const custom = customWordsRaw.split(',').map(w=>w.trim()).filter(Boolean);
-    if (custom.length > 0) wordList = [...custom, ...wordList];
+  if (customRaw) {
+    const custom = customRaw.split(',').map(w=>w.trim()).filter(Boolean);
+    if (custom.length) wordList = [...custom,...wordList];
   }
   const word = wordList[Math.floor(Math.random()*wordList.length)];
-  const shuffledIds = shuffle(players.map(p=>p.id));
-  const impostors = shuffledIds.slice(0, numImpostors);
-  updateRoom(state.roomCode, r => {
-    r.phase = 'reveal';
-    r.word = word;
-    r.impostors = impostors;
-    r.config = { impostors: numImpostors, debateTime };
-    r.votes = {};
-    r.readyCount = 0;
-    r.eliminationLog = [];
-    Object.keys(r.players).forEach(pid => {
-      r.players[pid].ready = false;
-      r.players[pid].voted = false;
-      r.players[pid].eliminated = false;
-    });
-    return r;
+  const shuffled = shuffle(players.map(p=>p.id));
+  const impostors = shuffled.slice(0,numImpostors);
+
+  const playerUpdates = {};
+  players.forEach(p => {
+    playerUpdates[`players/${p.id}/ready`] = false;
+    playerUpdates[`players/${p.id}/voted`] = false;
+    playerUpdates[`players/${p.id}/eliminated`] = false;
+  });
+
+  await updateRoom(state.roomCode, {
+    phase: 'reveal', word, impostors,
+    'config/impostors': numImpostors,
+    'config/debateTime': debateTime,
+    votes: {}, readyCount: 0, eliminationLog: [],
+    elimResult: null, nextPhase: null,
+    ...playerUpdates,
   });
 }
 
-// ==================== REVEAL ====================
+// ============================================================
+//  REVEAL
+// ============================================================
 function renderReveal(room) {
-  const isImpostor = room.impostors.includes(state.playerId);
+  const isImpostor = (room.impostors||[]).includes(state.playerId);
   state.myRole = isImpostor ? 'impostor' : 'innocent';
-  const badge = document.getElementById('role-badge');
-  const wordCard = document.getElementById('word-card-el');
-  const wordValue = document.getElementById('word-value');
-  const wordLabel = document.getElementById('word-label');
-  const wordEmoji = document.getElementById('word-emoji');
-  const hint = document.getElementById('impostor-hint');
+  const badge=document.getElementById('role-badge');
+  const wc=document.getElementById('word-card-el');
+  const wv=document.getElementById('word-value');
+  const wl=document.getElementById('word-label');
+  const we=document.getElementById('word-emoji');
+  const hint=document.getElementById('impostor-hint');
   if (isImpostor) {
-    badge.className = 'role-badge impostor'; badge.textContent = '⚠ Eres el Impostor';
-    wordCard.className = 'word-card impostor-card';
-    wordValue.textContent = '???'; wordValue.style.color = 'var(--red)';
-    wordLabel.textContent = 'No conoces la palabra';
-    wordEmoji.textContent = '🎭'; hint.style.display = 'block';
+    badge.className='role-badge impostor'; badge.textContent='⚠ Eres el Impostor';
+    wc.className='word-card impostor-card'; wv.textContent='???'; wv.style.color='var(--red)';
+    wl.textContent='No conoces la palabra'; we.textContent='🎭'; hint.style.display='block';
   } else {
-    badge.className = 'role-badge innocent'; badge.textContent = '✓ Inocente';
-    wordCard.className = 'word-card';
-    wordValue.textContent = room.word; wordValue.style.color = '';
-    wordLabel.textContent = 'La palabra secreta es';
-    wordEmoji.textContent = '🔑'; hint.style.display = 'none';
+    badge.className='role-badge innocent'; badge.textContent='✓ Inocente';
+    wc.className='word-card'; wv.textContent=room.word; wv.style.color='';
+    wl.textContent='La palabra secreta es'; we.textContent='🔑'; hint.style.display='none';
   }
   showScreen('reveal');
 }
 
-function confirmReady() {
+async function confirmReady() {
   state.ready = true;
-  updateRoom(state.roomCode, r => {
-    r.players[state.playerId].ready = true;
-    r.readyCount = Object.values(r.players).filter(p=>p.ready && !p.eliminated).length;
-    return r;
+  const room = await getRoom(state.roomCode);
+  const active = Object.values(room.players).filter(p=>!p.eliminated&&!p.banned);
+  const readyCount = active.filter(p=>p.ready).length + 1;
+  await updateRoom(state.roomCode, {
+    [`players/${state.playerId}/ready`]: true,
+    readyCount,
   });
+  const freshRoom = await getRoom(state.roomCode);
   showScreen('debate');
-  renderDebate(getRoom(state.roomCode));
+  renderDebate(freshRoom);
 }
 
-// ==================== DEBATE ====================
+// ============================================================
+//  DEBATE
+// ============================================================
 function renderDebate(room) {
-  const activePlayers = Object.values(room.players).filter(p=>!p.eliminated);
-  const total = activePlayers.length;
-  const ready = room.readyCount || 0;
-  document.getElementById('ready-count').textContent = `${ready}/${total} jugadores listos para votar`;
+  const active = Object.values(room.players).filter(p=>!p.eliminated&&!p.banned);
+  document.getElementById('ready-count').textContent = `${room.readyCount||0}/${active.length} jugadores listos`;
   document.getElementById('go-vote-btn').disabled = !state.isHost;
 
-  // Continuation round banner
   const log = room.eliminationLog || [];
   const banner = document.getElementById('continue-banner');
   if (log.length > 0) {
     const last = log[log.length-1];
-    banner.style.display = 'flex';
+    banner.style.display='flex';
     document.getElementById('continue-banner-text').textContent =
-      `Ronda ${log.length}: ${last.name} (inocente) fue eliminado. El impostor aún sigue entre vosotros — ¡debatid más!`;
-  } else {
-    banner.style.display = 'none';
-  }
+      `Ronda ${log.length}: ${last.name} (inocente) fue eliminado. El impostor sigue entre vosotros — ¡debatid más!`;
+  } else { banner.style.display='none'; }
 
   const dt = room.config?.debateTime || 0;
   const timerEl = document.getElementById('debate-timer');
@@ -784,430 +814,430 @@ function renderDebate(room) {
       state.debateTimerRemaining = remaining;
       timerEl.textContent = formatTime(remaining);
       if (remaining <= 0) {
-        clearInterval(state.debateTimer); state.debateTimer = null;
-        timerEl.textContent = '⏰ ¡Tiempo!';
+        clearInterval(state.debateTimer); state.debateTimer=null;
+        timerEl.textContent='⏰ ¡Tiempo!';
         if (state.isHost) goToVote();
       }
-    }, 1000);
-  } else if (!dt) {
-    timerEl.textContent = '';
-  }
+    },1000);
+  } else if (!dt) { timerEl.textContent=''; }
 }
 
-function goToVote() {
+async function goToVote() {
   if (!state.isHost) return;
-  // Reset votes for this round
-  updateRoom(state.roomCode, r => {
-    r.phase = 'vote';
-    r.votes = {};
-    Object.keys(r.players).forEach(pid => { if(!r.players[pid].eliminated) r.players[pid].voted = false; });
-    return r;
-  });
-  state.voted = false;
-  state.voteFor = null;
+  const room = await getRoom(state.roomCode);
+  const active = Object.values(room.players).filter(p=>!p.eliminated&&!p.banned);
+  const voteResets = {};
+  active.forEach(p => { voteResets[`players/${p.id}/voted`]=false; });
+  await updateRoom(state.roomCode, { phase:'vote', votes:{}, ...voteResets });
+  state.voted=false; state.voteFor=null;
 }
 
-// ==================== VOTE ====================
+// ============================================================
+//  VOTE
+// ============================================================
 function renderVote(room) {
-  const players = Object.values(room.players).filter(p=>!p.eliminated);
+  const active = Object.values(room.players).filter(p=>!p.eliminated&&!p.banned);
   const votes = room.votes || {};
-  const total = players.length;
-  const votesCast = Object.keys(votes).length;
+  const total = active.length;
+  const cast = Object.keys(votes).length;
   document.getElementById('vote-status-text').textContent =
-    state.voted ? `Votaste. ${votesCast}/${total} votos recibidos` : '¿Quién es el impostor?';
+    state.voted ? `Votaste. ${cast}/${total} votos recibidos` : '¿Quién es el impostor?';
   document.getElementById('vote-waiting').textContent =
-    state.voted ? `Esperando ${total-votesCast} jugadores más...` : '';
-  const voteCounts = {};
-  Object.values(votes).forEach(pid => { voteCounts[pid] = (voteCounts[pid]||0)+1; });
+    state.voted ? `Esperando ${total-cast} jugadores más...` : '';
+
+  const counts = {};
+  Object.values(votes).forEach(pid=>{ counts[pid]=(counts[pid]||0)+1; });
+
   const list = document.getElementById('vote-list');
-  list.innerHTML = '';
-  players.forEach(p => {
-    if (p.id === state.playerId) return;
-    const count = voteCounts[p.id] || 0;
-    const pct = total > 1 ? Math.round(count/(total-1)*100) : 0;
-    const isSelected = state.voteFor === p.id;
+  list.innerHTML='';
+  active.forEach(p => {
+    if (p.id===state.playerId) return;
+    const count = counts[p.id]||0;
+    const pct = total>1 ? Math.round(count/(total-1)*100) : 0;
     const div = document.createElement('div');
-    div.className = 'vote-item'+(isSelected?' selected':'')+(state.voted?' voted-by-me':'');
-    div.innerHTML = `<div style="flex:1;"><div class="vote-name">${p.name}</div><div class="vote-bar" style="width:${pct}%"></div></div>
+    div.className='vote-item'+(state.voteFor===p.id?' selected':'')+(state.voted?' voted-by-me':'');
+    div.innerHTML=`<div style="flex:1;"><div class="vote-name">${p.name}</div>
+      <div class="vote-bar" style="width:${pct}%"></div></div>
       <div class="vote-count">${count} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>`;
-    if (!state.voted) div.onclick = () => castVote(p.id);
+    if (!state.voted) div.onclick=()=>castVote(p.id);
     list.appendChild(div);
   });
 }
 
-function castVote(targetId) {
+async function castVote(targetId) {
   if (state.voted) return;
-  state.voted = true;
-  state.voteFor = targetId;
-  updateRoom(state.roomCode, r => {
-    r.votes[state.playerId] = targetId;
-    r.players[state.playerId].voted = true;
-    const active = Object.values(r.players).filter(p=>!p.eliminated);
-    const votesCast = Object.keys(r.votes).length;
-    if (votesCast >= active.length) {
-      r.phase = 'elimination';
-    }
-    return r;
-  });
+  state.voted=true; state.voteFor=targetId;
+  const room = await getRoom(state.roomCode);
+  const active = Object.values(room.players).filter(p=>!p.eliminated&&!p.banned);
+  const newVotes = Object.assign({}, room.votes||{}, { [state.playerId]: targetId });
+  const updates = {
+    [`votes/${state.playerId}`]: targetId,
+    [`players/${state.playerId}/voted`]: true,
+  };
+  if (Object.keys(newVotes).length >= active.length) {
+    updates.phase = 'elimination';
+  }
+  await updateRoom(state.roomCode, updates);
   showToast('¡Voto registrado!');
 }
 
-// ==================== ELIMINATION PHASE ====================
-// This is shown to all players between vote and debate/final results
-function renderElimination(room) {
+// ============================================================
+//  ELIMINATION
+// ============================================================
+async function renderElimination(room) {
   const votes = room.votes || {};
   const players = room.players;
   const impostors = room.impostors || [];
 
   // Tally
   const tally = {};
-  Object.values(votes).forEach(pid => { tally[pid] = (tally[pid]||0)+1; });
-  let maxVotes = 0;
-  let eliminated = [];
-  Object.entries(tally).forEach(([pid,cnt]) => {
-    if (cnt > maxVotes) { maxVotes=cnt; eliminated=[pid]; }
-    else if (cnt === maxVotes) eliminated.push(pid);
+  Object.values(votes).forEach(pid=>{ tally[pid]=(tally[pid]||0)+1; });
+  let maxVotes=0; let eliminated=[];
+  Object.entries(tally).forEach(([pid,cnt])=>{
+    if(cnt>maxVotes){maxVotes=cnt;eliminated=[pid];}
+    else if(cnt===maxVotes) eliminated.push(pid);
   });
-
-  // In case of tie, no one is eliminated
-  const isTie = eliminated.length > 1;
-  let eliminatedPid = isTie ? null : eliminated[0];
+  const isTie = eliminated.length>1;
+  const eliminatedPid = isTie ? null : eliminated[0];
   const eliminatedPlayer = eliminatedPid ? players[eliminatedPid] : null;
   const isImpostorEliminated = eliminatedPid && impostors.includes(eliminatedPid);
 
-  // Build tally display
-  const tallyEl = document.getElementById('elim-tally');
-  tallyEl.innerHTML = '';
-  const activePlayers = Object.values(players).filter(p=>!p.eliminated);
-  const total = activePlayers.length;
-  const sorted = [...activePlayers].sort((a,b)=>(tally[b.id]||0)-(tally[a.id]||0));
-  sorted.forEach(p => {
-    const cnt = tally[p.id] || 0;
-    const pct = total>0 ? Math.round(cnt/total*100) : 0;
-    const div = document.createElement('div');
-    div.className = 'vote-item no-pointer';
-    div.style.cursor = 'default';
-    div.innerHTML = `<div style="flex:1;"><div class="vote-name">${p.name}${p.id===eliminatedPid?' <span style="font-size:0.78rem;color:var(--red);">← eliminado</span>':''}</div>
+  // Tally display
+  const tallyEl=document.getElementById('elim-tally');
+  tallyEl.innerHTML='';
+  const active=Object.values(players).filter(p=>!p.eliminated&&!p.banned);
+  const total=active.length;
+  [...active].sort((a,b)=>(tally[b.id]||0)-(tally[a.id]||0)).forEach(p=>{
+    const cnt=tally[p.id]||0;
+    const pct=total>0?Math.round(cnt/total*100):0;
+    const div=document.createElement('div');
+    div.className='vote-item no-pointer'; div.style.cursor='default';
+    div.innerHTML=`<div style="flex:1;"><div class="vote-name">${p.name}${p.id===eliminatedPid?' <span style="font-size:0.78rem;color:var(--red);">← eliminado</span>':''}</div>
       <div class="vote-bar" style="width:${pct}%;background:${p.id===eliminatedPid?'var(--red)':'var(--muted)'}"></div></div>
       <div class="vote-count" style="${cnt===maxVotes&&maxVotes>0?'color:var(--text);font-weight:700;':''}">${cnt} votos</div>`;
     tallyEl.appendChild(div);
   });
 
-  // Determine what happens next
-  // We need the host to actually apply the elimination and decide next phase
+  // Host computes next step and writes it
   if (state.isHost) {
-    updateRoom(state.roomCode, r => {
-      if (eliminatedPid && r.players[eliminatedPid]) {
-        r.players[eliminatedPid].eliminated = true;
-        if (!r.eliminationLog) r.eliminationLog = [];
-        r.eliminationLog.push({ id: eliminatedPid, name: r.players[eliminatedPid].name, wasImpostor: isImpostorEliminated });
-      }
-      // Check win conditions
-      const impostorWins = checkImpostorWin(r);
-      const innocentsWin = allImpostorsEliminated(r);
-      if (isTie) {
-        r.elimResult = 'tie';
-        r.nextPhase = 'debate'; // tie = no elimination, keep going
-      } else if (innocentsWin) {
-        r.elimResult = 'innocents_win';
-        r.nextPhase = 'results';
-      } else if (impostorWins) {
-        r.elimResult = 'impostor_wins';
-        r.nextPhase = 'results';
-      } else {
-        r.elimResult = 'continue'; // eliminated innocent, impostor still alive, game continues
-        r.nextPhase = 'debate';
-      }
-      r.readyCount = 0;
-      Object.keys(r.players).forEach(pid => { if(!r.players[pid].eliminated) r.players[pid].ready = false; });
-      return r;
+    const playerUpdates = {};
+    if (eliminatedPid && players[eliminatedPid]) {
+      playerUpdates[`players/${eliminatedPid}/eliminated`] = true;
+    }
+    const newLog = [...(room.eliminationLog||[])];
+    if (eliminatedPid) {
+      newLog.push({ id:eliminatedPid, name:players[eliminatedPid]?.name||'?', wasImpostor:isImpostorEliminated });
+    }
+
+    // Compute win after applying elimination
+    const simulatedRoom = JSON.parse(JSON.stringify(room));
+    if (eliminatedPid && simulatedRoom.players[eliminatedPid]) simulatedRoom.players[eliminatedPid].eliminated=true;
+    const impostorWins = checkImpostorWin(simulatedRoom);
+    const innocentsWin = allImpostorsEliminated(simulatedRoom);
+
+    let elimResult, nextPhase;
+    if (isTie)             { elimResult='tie';           nextPhase='debate'; }
+    else if (innocentsWin) { elimResult='innocents_win'; nextPhase='results'; }
+    else if (impostorWins) { elimResult='impostor_wins'; nextPhase='results'; }
+    else                   { elimResult='continue';      nextPhase='debate'; }
+
+    const readyResets = {};
+    Object.keys(room.players).forEach(pid=>{ if(!room.players[pid].eliminated) readyResets[`players/${pid}/ready`]=false; });
+
+    await updateRoom(state.roomCode, {
+      ...playerUpdates, eliminationLog: newLog,
+      elimResult, nextPhase, readyCount:0, ...readyResets,
     });
   }
 
-  // Wait for host to set elimResult before rendering
-  setTimeout(() => {
-    const updated = getRoom(state.roomCode);
-    if (!updated || !updated.elimResult) { setTimeout(()=>renderEliminationFinal(room, isTie, eliminatedPlayer, isImpostorEliminated), 600); return; }
-    renderEliminationFinal(updated, isTie, eliminatedPlayer, isImpostorEliminated);
-  }, 400);
+  // Wait for host to write elimResult (for guests, polling via listener)
+  // renderEliminationFinal will be called via the onRoomUpdate when elimResult arrives
+  showScreen('elimination');
+  // If already has elimResult (e.g. host sees own write), render immediately
+  if (room.elimResult) {
+    renderEliminationFinal(room, isTie, eliminatedPlayer, isImpostorEliminated);
+  }
 }
 
 function renderEliminationFinal(room, isTie, eliminatedPlayer, isImpostorEliminated) {
-  const elimResult = room.elimResult;
-  const icon = document.getElementById('elim-icon');
-  const title = document.getElementById('elim-title');
-  const sub = document.getElementById('elim-sub');
-  const continueBox = document.getElementById('elim-continue-box');
-  const continueText = document.getElementById('elim-continue-text');
-  const nextBtn = document.getElementById('elim-next-btn');
-  const waitText = document.getElementById('elim-wait-text');
+  const er = room.elimResult;
+  const icon=document.getElementById('elim-icon');
+  const title=document.getElementById('elim-title');
+  const sub=document.getElementById('elim-sub');
+  const cbox=document.getElementById('elim-continue-box');
+  const ctxt=document.getElementById('elim-continue-text');
+  const btn=document.getElementById('elim-next-btn');
+  const wait=document.getElementById('elim-wait-text');
 
   if (isTie) {
-    icon.textContent = '🤝';
-    title.textContent = 'Empate — nadie eliminado';
-    sub.textContent = 'Los votos terminaron en empate. Seguid debatiendo.';
-    continueBox.style.display = 'flex';
-    continueText.textContent = 'Volvéis a debatir. El impostor sigue oculto.';
+    icon.textContent='🤝'; title.textContent='Empate — nadie eliminado';
+    sub.textContent='Los votos terminaron en empate. Seguid debatiendo.';
+    cbox.style.display='flex'; ctxt.textContent='Volvéis a debatir. El impostor sigue oculto.';
   } else if (eliminatedPlayer) {
-    icon.textContent = isImpostorEliminated ? '🕵️' : '😢';
-    title.textContent = isImpostorEliminated
-      ? `¡${eliminatedPlayer.name} era el impostor!`
-      : `${eliminatedPlayer.name} fue eliminado`;
-    sub.textContent = isImpostorEliminated
-      ? 'Los inocentes acertaron.'
-      : 'Era inocente. El impostor sigue entre vosotros.';
-    if (elimResult === 'continue') {
-      continueBox.style.display = 'flex';
-      continueText.textContent = 'El impostor aún puede ganar. ¡Volvéis a debatir!';
-    } else {
-      continueBox.style.display = 'none';
-    }
+    icon.textContent=isImpostorEliminated?'🕵️':'😢';
+    title.textContent=isImpostorEliminated?`¡${eliminatedPlayer.name} era el impostor!`:`${eliminatedPlayer.name} fue eliminado`;
+    sub.textContent=isImpostorEliminated?'Los inocentes acertaron.':'Era inocente. El impostor sigue entre vosotros.';
+    cbox.style.display=er==='continue'?'flex':'none';
+    if(er==='continue') ctxt.textContent='El impostor aún puede ganar. ¡Volvéis a debatir!';
   }
 
   if (state.isHost) {
-    nextBtn.style.display = 'flex';
-    waitText.textContent = '';
-    if (elimResult === 'results' || elimResult === 'innocents_win' || elimResult === 'impostor_wins') {
-      nextBtn.textContent = 'Ver resultado final';
-    } else {
-      nextBtn.textContent = 'Continuar → Debatir';
-    }
+    btn.style.display='flex'; wait.textContent='';
+    btn.textContent=(er==='results'||er==='innocents_win'||er==='impostor_wins')?'Ver resultado final':'Continuar → Debatir';
   } else {
-    nextBtn.style.display = 'none';
-    waitText.textContent = 'Esperando al anfitrión...';
+    btn.style.display='none';
+    wait.textContent='Esperando al anfitrión...';
   }
-
-  showScreen('elimination');
 }
 
-function afterElimination() {
+async function afterElimination() {
   if (!state.isHost) return;
-  const room = getRoom(state.roomCode);
-  if (!room) return;
+  const room = await getRoom(state.roomCode);
   const next = room.nextPhase || 'debate';
-  updateRoom(state.roomCode, r => {
-    r.phase = next;
-    if (next === 'debate') {
-      r.votes = {};
-      Object.keys(r.players).forEach(pid => { if(!r.players[pid].eliminated) r.players[pid].voted=false; });
-    }
-    return r;
-  });
-  state.voted = false;
-  state.voteFor = null;
-  if (next === 'debate') {
-    // Reset debate timer for next round
-    if (state.debateTimer) { clearInterval(state.debateTimer); state.debateTimer = null; }
-    state.debateTimerRemaining = 0;
+  const updates = { phase: next };
+  if (next==='debate') {
+    const active = Object.values(room.players).filter(p=>!p.eliminated&&!p.banned);
+    active.forEach(p=>{ updates[`players/${p.id}/voted`]=false; });
+    updates.votes={};
+    if (state.debateTimer) { clearInterval(state.debateTimer); state.debateTimer=null; }
+    state.debateTimerRemaining=0;
   }
+  state.voted=false; state.voteFor=null;
+  await updateRoom(state.roomCode, updates);
 }
 
-// ==================== FINAL RESULTS ====================
+// ============================================================
+//  RESULTS
+// ============================================================
 function renderResults(room) {
-  const votes = room.votes || {};
-  const players = room.players;
-  const impostors = room.impostors || [];
-  const log = room.eliminationLog || [];
-
-  document.getElementById('result-word').textContent = room.word || '???';
-  const impostorNames = impostors.map(pid=>players[pid]?.name||'?').join(', ');
-  document.getElementById('impostors-reveal').innerHTML = `El impostor era: <strong>${impostorNames}</strong>`;
-
-  const impostorWon = room.elimResult === 'impostor_wins';
-
+  const players=room.players; const impostors=room.impostors||[]; const log=room.eliminationLog||[];
+  document.getElementById('result-word').textContent=room.word||'???';
+  const impostorNames=impostors.map(pid=>players[pid]?.name||'?').join(', ');
+  document.getElementById('impostors-reveal').innerHTML=`El impostor era: <strong>${impostorNames}</strong>`;
+  const impostorWon=room.elimResult==='impostor_wins';
   if (impostorWon) {
-    document.getElementById('result-icon').textContent = '🎭';
-    document.getElementById('result-title').textContent = '¡El impostor ganó!';
-    document.getElementById('result-title').style.color = 'var(--red)';
-    document.getElementById('result-sub').textContent = `${impostorNames} sobrevivió hasta dominar la sala.`;
+    document.getElementById('result-icon').textContent='🎭';
+    document.getElementById('result-title').textContent='¡El impostor ganó!';
+    document.getElementById('result-title').style.color='var(--red)';
+    document.getElementById('result-sub').textContent=`${impostorNames} sobrevivió hasta dominar la sala.`;
   } else {
-    document.getElementById('result-icon').textContent = '🕵️';
-    document.getElementById('result-title').textContent = '¡Impostor atrapado!';
-    document.getElementById('result-title').style.color = 'var(--accent)';
-    document.getElementById('result-sub').textContent = `Los inocentes ganaron tras ${log.length+1} ronda${log.length>0?'s':''} de debate.`;
+    document.getElementById('result-icon').textContent='🕵️';
+    document.getElementById('result-title').textContent='¡Impostor atrapado!';
+    document.getElementById('result-title').style.color='var(--accent)';
+    document.getElementById('result-sub').textContent=`Los inocentes ganaron tras ${log.length+1} ronda${log.length>0?'s':''} de debate.`;
   }
-
-  // Show elimination history
-  const tallyEl = document.getElementById('result-vote-tally');
-  tallyEl.innerHTML = '';
-  if (log.length > 0) {
-    const histLabel = document.createElement('div');
-    histLabel.style.cssText = 'font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;';
-    histLabel.textContent = 'Historial de eliminaciones';
-    tallyEl.appendChild(histLabel);
-    log.forEach((entry, i) => {
-      const div = document.createElement('div');
-      div.className = 'vote-item no-pointer';
-      div.style.cursor = 'default';
-      div.innerHTML = `<div class="vote-name">Ronda ${i+1}: ${entry.name}</div>
-        <div style="font-size:0.78rem;color:${entry.wasImpostor?'var(--red)':'var(--muted)'};">${entry.wasImpostor?'impostor':'inocente'}</div>`;
+  const tallyEl=document.getElementById('result-vote-tally');
+  tallyEl.innerHTML='';
+  if (log.length>0) {
+    const lbl=document.createElement('div');
+    lbl.style.cssText='font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;';
+    lbl.textContent='Historial de eliminaciones'; tallyEl.appendChild(lbl);
+    log.forEach((e,i)=>{
+      const div=document.createElement('div');
+      div.className='vote-item no-pointer'; div.style.cursor='default';
+      div.innerHTML=`<div class="vote-name">Ronda ${i+1}: ${e.name}</div>
+        <div style="font-size:0.78rem;color:${e.wasImpostor?'var(--red)':'var(--muted)'};">${e.wasImpostor?'impostor':'inocente'}</div>`;
       tallyEl.appendChild(div);
     });
   }
-
-  document.getElementById('play-again-btn').style.display = state.isHost ? 'flex' : 'none';
+  document.getElementById('play-again-btn').style.display=state.isHost?'flex':'none';
   showScreen('results');
 }
 
-// ==================== PLAY AGAIN ====================
-function playAgain() {
+// ============================================================
+//  PLAY AGAIN / LEAVE
+// ============================================================
+async function playAgain() {
   if (!state.isHost) return;
-  updateRoom(state.roomCode, r => {
-    r.phase = 'lobby'; r.word=null; r.impostors=[]; r.votes={}; r.readyCount=0;
-    r.eliminationLog=[]; r.elimResult=null; r.nextPhase=null;
-    Object.keys(r.players).forEach(pid => {
-      if (r.players[pid].banned) { delete r.players[pid]; return; }
-      r.players[pid].ready=false; r.players[pid].voted=false; r.players[pid].eliminated=false; r.players[pid].kicked=false;
-    });
-    return r;
+  const room = await getRoom(state.roomCode);
+  const updates = {
+    phase:'lobby', word:null, impostors:[], votes:{}, readyCount:0,
+    eliminationLog:[], elimResult:null, nextPhase:null,
+  };
+  Object.keys(room.players).forEach(pid=>{
+    if (room.players[pid].banned) { updates[`players/${pid}`]=null; return; }
+    updates[`players/${pid}/ready`]=false;
+    updates[`players/${pid}/voted`]=false;
+    updates[`players/${pid}/eliminated`]=false;
+    updates[`players/${pid}/kicked`]=false;
   });
-  state.voted=false; state.ready=false; state.voteFor=null; state.myRole=null; state.eliminationRound=0;
+  state.voted=false; state.ready=false; state.voteFor=null; state.myRole=null;
   state.debateTimerRemaining=0;
   if (state.debateTimer) { clearInterval(state.debateTimer); state.debateTimer=null; }
+  await updateRoom(state.roomCode, updates);
 }
 
-function leaveGame() {
-  stopPolling();
-  if (state.roomCode) {
-    updateRoom(state.roomCode, r => {
-      delete r.players[state.playerId];
-      if (Object.keys(r.players).length===0) { const db=getDB(); delete db[state.roomCode]; setDB(db); }
-      return r;
-    });
+async function leaveGame() {
+  stopListening();
+  if (state.roomCode && state.playerId) {
+    const room = await getRoom(state.roomCode).catch(()=>null);
+    if (room) {
+      const remaining = Object.keys(room.players||{}).filter(p=>p!==state.playerId);
+      if (remaining.length===0) {
+        await db.ref(roomPath(state.roomCode)).remove().catch(()=>{});
+      } else {
+        await updateRoom(state.roomCode,{[`players/${state.playerId}`]:null}).catch(()=>{});
+      }
+    }
   }
-  state = { playerId:null,playerName:null,roomCode:null,isHost:false,gameData:null,
-    myRole:null,voted:false,voteFor:null,debateTimer:null,debateTimerRemaining:0,ready:false,eliminationRound:0 };
+  if (state.debateTimer) { clearInterval(state.debateTimer); state.debateTimer=null; }
+  state={playerId:null,playerName:null,roomCode:null,isHost:false,myRole:null,
+    voted:false,voteFor:null,ready:false,debateTimer:null,debateTimerRemaining:0};
   showScreen('home');
 }
 
 function dismissKick() {
   document.getElementById('kicked-overlay').classList.remove('show');
-  leaveGame();
+  stopListening();
+  state={playerId:null,playerName:null,roomCode:null,isHost:false,myRole:null,
+    voted:false,voteFor:null,ready:false,debateTimer:null,debateTimerRemaining:0};
+  showScreen('home');
 }
 
-// ==================== RENDER LOBBY PLAYERS ====================
+// ============================================================
+//  LOBBY PLAYERS RENDER
+// ============================================================
 function renderLobbyPlayers(room, gridId) {
-  const players = Object.values(room.players).filter(p=>!p.banned);
-  const grid = document.getElementById(gridId);
-  grid.innerHTML = '';
-  players.forEach(p => {
-    const isMe = p.id === state.playerId;
-    const isHost = p.id === room.host;
-    const div = document.createElement('div');
-    div.className = 'player-chip' + (isMe?' me':'');
-    const nameArea = `<div class="player-name-area"><div class="player-dot${isMe?'':' other'}"></div>${p.name}${isMe?' (tú)':''}${isHost?' 👑':''}</div>`;
-    let actions = '';
+  const players=Object.values(room.players||{}).filter(p=>!p.banned);
+  const grid=document.getElementById(gridId);
+  grid.innerHTML='';
+  players.forEach(p=>{
+    const isMe=p.id===state.playerId;
+    const isHostP=p.id===room.host;
+    const div=document.createElement('div');
+    div.className='player-chip'+(isMe?' me':'');
+    const nameArea=`<div class="player-name-area"><div class="player-dot${isMe?'':' other'}"></div>${p.name}${isMe?' (tú)':''}${isHostP?' 👑':''}</div>`;
+    let actions='';
     if (state.isHost && !isMe) {
-      actions = `<div class="player-actions">
+      actions=`<div class="player-actions">
         <button class="kick-btn" onclick="kickPlayer('${p.id}')">KICK</button>
         <button class="ban-btn" onclick="banPlayer('${p.id}')">BAN</button>
       </div>`;
     }
-    div.innerHTML = nameArea + actions;
+    div.innerHTML=nameArea+actions;
     grid.appendChild(div);
   });
 }
 
-// ==================== SYNC ====================
-let lastPhase = null;
-let lastElimResult = null;
+// ============================================================
+//  MAIN ROOM LISTENER  — Firebase real-time callback
+// ============================================================
+let lastPhase=null;
+let lastElimResult=null;
 
-function syncFromRoom() {
-  const room = getRoom(state.roomCode);
+function onRoomUpdate(room) {
   if (!room) return;
 
-  // Stale room cleanup
-  if (room.createdAt && Date.now()-room.createdAt > 7200000) { leaveGame(); showToast('La sala expiró'); return; }
-
-  // Check if I was kicked or banned
-  const me = room.players[state.playerId];
-  if (me && (me.kicked || me.banned)) {
-    const isBan = me.banned;
-    document.getElementById('kicked-icon').textContent = isBan ? '🚫' : '👢';
-    document.getElementById('kicked-title').textContent = isBan ? 'Has sido baneado' : 'Has sido expulsado';
-    document.getElementById('kicked-sub').textContent = isBan
-      ? 'El anfitrión te ha baneado permanentemente de esta sala.'
-      : 'El anfitrión te ha echado de la sala.';
-    stopPolling();
+  // Kicked/banned check
+  const me=room.players?.[state.playerId];
+  if (me && (me.kicked||me.banned)) {
+    const isBan=!!me.banned;
+    document.getElementById('kicked-icon').textContent=isBan?'🚫':'👢';
+    document.getElementById('kicked-title').textContent=isBan?'Has sido baneado':'Has sido expulsado';
+    document.getElementById('kicked-sub').textContent=isBan
+      ?'El anfitrión te ha baneado permanentemente de esta sala.'
+      :'El anfitrión te ha echado de la sala.';
+    stopListening();
     document.getElementById('kicked-overlay').classList.add('show');
     return;
   }
 
-  state.gameData = room;
-  const phase = room.phase;
+  const phase=room.phase;
 
-  if (phase === 'lobby') {
-    const players = Object.values(room.players).filter(p=>!p.banned);
-    const count = players.length;
+  // ---- LOBBY ----
+  if (phase==='lobby') {
+    const players=Object.values(room.players||{}).filter(p=>!p.banned);
+    const count=players.length;
     if (state.isHost) {
-      document.getElementById('player-count-label').textContent = count;
-      document.getElementById('lobby-status').textContent = count>=3 ? `${count} jugadores conectados ✓` : `${count}/3 mínimo...`;
-      document.getElementById('start-btn').disabled = count < 3;
-      renderLobbyPlayers(room, 'lobby-players');
-      if (lastPhase !== 'lobby') showScreen('lobby');
+      document.getElementById('player-count-label').textContent=count;
+      document.getElementById('lobby-status').textContent=count>=3?`${count} jugadores conectados ✓`:`${count}/3 mínimo...`;
+      document.getElementById('start-btn').disabled=count<3;
+      renderLobbyPlayers(room,'lobby-players');
+      if (lastPhase!=='lobby') showScreen('lobby');
     } else {
-      renderLobbyPlayers(room, 'waiting-players');
-      if (lastPhase !== 'lobby') showScreen('waiting');
+      renderLobbyPlayers(room,'waiting-players');
+      if (lastPhase!=='lobby') showScreen('waiting');
     }
   }
 
-  if (phase === 'reveal' && lastPhase !== 'reveal') {
-    if (state.debateTimer) { clearInterval(state.debateTimer); state.debateTimer=null; }
-    state.voted=false; state.ready=false; state.voteFor=null;
-    state.debateTimerRemaining=0; state.eliminationRound=0;
+  // ---- REVEAL ----
+  if (phase==='reveal' && lastPhase!=='reveal') {
+    if (state.debateTimer){clearInterval(state.debateTimer);state.debateTimer=null;}
+    state.voted=false; state.ready=false; state.voteFor=null; state.debateTimerRemaining=0;
     renderReveal(room);
   }
 
-  if (phase === 'debate') {
-    if (lastPhase !== 'debate') {
-      // New debate round (could be continuation)
-      if (state.debateTimer) { clearInterval(state.debateTimer); state.debateTimer=null; state.debateTimerRemaining=0; }
+  // ---- DEBATE ----
+  if (phase==='debate') {
+    if (lastPhase!=='debate') {
+      if (state.debateTimer){clearInterval(state.debateTimer);state.debateTimer=null;state.debateTimerRemaining=0;}
       state.voted=false; state.voteFor=null;
-      // Reset my local ready state for new round
-      if (lastPhase === 'elimination') { state.ready=false; }
+      if (lastPhase==='elimination') state.ready=false;
       renderDebate(room);
       showScreen('debate');
     } else {
-      const activePlayers = Object.values(room.players).filter(p=>!p.eliminated);
-      document.getElementById('ready-count').textContent = `${room.readyCount||0}/${activePlayers.length} jugadores listos para votar`;
+      const active=Object.values(room.players||{}).filter(p=>!p.eliminated&&!p.banned);
+      document.getElementById('ready-count').textContent=`${room.readyCount||0}/${active.length} jugadores listos`;
     }
-    document.getElementById('go-vote-btn').disabled = !state.isHost;
+    document.getElementById('go-vote-btn').disabled=!state.isHost;
   }
 
-  if (phase === 'vote') {
-    if (lastPhase !== 'vote') { showScreen('vote'); }
+  // ---- VOTE ----
+  if (phase==='vote') {
+    if (lastPhase!=='vote') showScreen('vote');
     renderVote(room);
   }
 
-  if (phase === 'elimination' && lastPhase !== 'elimination') {
-    renderElimination(room);
-  }
-  // If host set elimResult and we're non-host, update the elimination screen
-  if (phase === 'elimination' && lastPhase === 'elimination' && room.elimResult && room.elimResult !== lastElimResult) {
-    lastElimResult = room.elimResult;
-    const log = room.eliminationLog || [];
-    const last = log.length > 0 ? log[log.length-1] : null;
-    renderEliminationFinal(room, room.elimResult==='tie', last ? room.players[last.id] : null, last?.wasImpostor||false);
+  // ---- ELIMINATION ----
+  if (phase==='elimination') {
+    if (lastPhase!=='elimination') {
+      lastElimResult=null;
+      renderElimination(room);
+    } else if (room.elimResult && room.elimResult!==lastElimResult) {
+      // Host wrote the result; guests now render final view
+      lastElimResult=room.elimResult;
+      const log=room.eliminationLog||[];
+      const last=log.length>0?log[log.length-1]:null;
+      const impostors=room.impostors||[];
+      const eliminatedPlayer=last&&room.players[last.id]?room.players[last.id]:null;
+      const isTie=room.elimResult==='tie';
+      const isImpostorElim=last?last.wasImpostor:false;
+      renderEliminationFinal(room,isTie,eliminatedPlayer,isImpostorElim);
+    }
   }
 
-  if (phase === 'results' && lastPhase !== 'results') {
+  // ---- RESULTS ----
+  if (phase==='results' && lastPhase!=='results') {
     renderResults(room);
   }
 
-  lastPhase = phase;
+  lastPhase=phase;
 }
 
-// ==================== INIT ====================
-(function cleanup() {
-  const db=getDB(); const now=Date.now(); let changed=false;
-  Object.entries(db).forEach(([code,room]) => { if(room.createdAt&&now-room.createdAt>7200000){delete db[code];changed=true;} });
-  if(changed) setDB(db);
+// ============================================================
+//  BOOT
+// ============================================================
+(function boot() {
+  const ok = initFirebaseFromSaved();
+  if (ok) {
+    // Pre-fill config fields in case user wants to edit
+    const cfg=loadConfig();
+    if (cfg) {
+      document.getElementById('cfg-apikey').value=cfg.apiKey||'';
+      document.getElementById('cfg-dburl').value=cfg.databaseURL||'';
+      document.getElementById('cfg-projectid').value=cfg.projectId||'';
+      document.getElementById('cfg-authdomain').value=cfg.authDomain||'';
+    }
+    showScreen('home');
+  } else {
+    showScreen('setup');
+  }
 })();
 
-document.getElementById('join-code').addEventListener('input', function(){ this.value=this.value.toUpperCase(); });
-document.getElementById('host-name').addEventListener('keydown', e=>{if(e.key==='Enter')createRoom();});
-document.getElementById('join-name').addEventListener('keydown', e=>{if(e.key==='Enter')joinRoom();});
-document.getElementById('join-code').addEventListener('keydown', e=>{if(e.key==='Enter')joinRoom();});
+document.getElementById('join-code').addEventListener('input',function(){this.value=this.value.toUpperCase();});
+document.getElementById('host-name').addEventListener('keydown',e=>{if(e.key==='Enter')createRoom();});
+document.getElementById('join-name').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom();});
+document.getElementById('join-code').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom();});
 </script>
 </body>
 </html>
