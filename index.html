@@ -125,6 +125,108 @@ textarea.word-categories{font-size:0.85rem;min-height:80px;resize:vertical;}
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text);color:var(--bg);padding:0.75rem 1.5rem;border-radius:100px;font-size:0.9rem;font-weight:500;transition:transform 0.3s ease;z-index:1000;white-space:nowrap;}
 .toast.show{transform:translateX(-50%) translateY(0);}
 @media(max-width:500px){.card{padding:1.5rem;}.settings-grid{grid-template-columns:1fr;}}
+
+/* ---- ELIMINATION ANIMATION ---- */
+#elim-anim-overlay{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0);
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;
+  transition:background 0.3s;
+}
+#elim-anim-overlay.active{
+  background:rgba(0,0,0,0.82);
+  pointer-events:all;
+}
+.elim-stage{
+  display:flex;flex-direction:column;align-items:center;gap:1.2rem;
+  opacity:0;transform:scale(0.7);
+  transition:opacity 0.35s ease,transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+.elim-stage.show{opacity:1;transform:scale(1);}
+
+/* The "body" silhouette */
+.body-scene{position:relative;width:120px;height:140px;}
+.body-figure{
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:54px;height:80px;
+}
+/* head */
+.body-figure .head{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--elim-color,var(--red));
+  margin:0 auto 0;
+  position:relative;
+  box-shadow:0 0 0 3px rgba(255,71,87,0.25);
+  transition:background 0.3s;
+}
+/* body */
+.body-figure .torso{
+  width:44px;height:36px;border-radius:10px 10px 6px 6px;
+  background:var(--elim-color,var(--red));
+  margin:3px auto 0;
+  opacity:0.85;
+}
+/* legs */
+.body-figure .legs{
+  display:flex;gap:4px;justify-content:center;margin-top:3px;
+}
+.body-figure .leg{
+  width:16px;height:22px;border-radius:4px 4px 6px 6px;
+  background:var(--elim-color,var(--red));
+  opacity:0.7;
+}
+
+/* Fall animation */
+@keyframes fallDown{
+  0%{transform:translateX(-50%) rotate(0deg) translateY(0);}
+  30%{transform:translateX(-50%) rotate(-15deg) translateY(4px);}
+  60%{transform:translateX(-50%) rotate(-80deg) translateY(18px);}
+  100%{transform:translateX(-50%) rotate(-90deg) translateY(30px);}
+}
+@keyframes fadeFloor{
+  0%{opacity:0;width:0;}
+  100%{opacity:1;width:90px;}
+}
+.body-figure.falling{
+  transform-origin:50% 100%;
+  animation:fallDown 0.7s ease-in forwards;
+}
+.elim-floor{
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  height:3px;border-radius:2px;
+  background:var(--elim-color,var(--red));
+  opacity:0;
+  animation:none;
+}
+.elim-floor.show{animation:fadeFloor 0.4s 0.65s ease forwards;}
+
+/* Particles */
+.elim-particles{position:absolute;inset:0;pointer-events:none;}
+.elim-particle{
+  position:absolute;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--elim-color,var(--red));
+  opacity:0;
+}
+@keyframes burst{
+  0%{opacity:1;transform:translate(0,0) scale(1);}
+  100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0.2);}
+}
+
+.elim-name{
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;
+  color:var(--text);text-align:center;
+  text-shadow:0 2px 20px rgba(0,0,0,0.8);
+}
+.elim-role-badge{
+  font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;
+  padding:0.3rem 1rem;border-radius:100px;
+}
+.elim-role-badge.innocent{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(232,255,71,0.3);}
+.elim-role-badge.impostor{background:var(--red-dim);color:var(--red);border:1px solid rgba(255,71,87,0.3);}
+.elim-subtitle{font-size:0.85rem;color:var(--muted);text-align:center;}
+
 </style>
 </head>
 <body>
@@ -635,7 +737,10 @@ async function goToVote(){
   if(!state.isHost)return;
   await patchRoom(state.roomCode,r=>{
     r.phase='vote'; r.votes={};
-    Object.values(r.players).filter(p=>!p.eliminated&&!p.banned).forEach(p=>r.players[p.id].voted=false);
+    Object.values(r.players).forEach(p=>{
+      // Eliminated/banned players count as already voted (they can't vote)
+      r.players[p.id].voted = !!(p.eliminated||p.banned);
+    });
     return r;
   });
   state.voted=false; state.voteFor=null;
@@ -647,8 +752,8 @@ async function goToVote(){
 function renderVote(room){
   const act=Object.values(room.players).filter(p=>!p.eliminated&&!p.banned);
   const votes=room.votes||{}; const total=act.length; const cast=Object.keys(votes).length;
-  document.getElementById('vote-status-text').textContent=state.voted?`Votaste. ${cast}/${total} votos`:'¿Quién es el impostor?';
-  document.getElementById('vote-waiting').textContent=state.voted?`Esperando ${total-cast} más...`:'';
+  document.getElementById('vote-status-text').textContent=state.voted?'¡Voto registrado! Esperando al resto...':'¿Quién es el impostor?';
+  document.getElementById('vote-waiting').textContent='';
   const counts={}; Object.values(votes).forEach(pid=>{counts[pid]=(counts[pid]||0)+1;});
   const list=document.getElementById('vote-list'); list.innerHTML='';
   act.forEach(p=>{
@@ -656,16 +761,16 @@ function renderVote(room){
     const cnt=counts[p.id]||0; const pct=total>1?Math.round(cnt/(total-1)*100):0;
     const div=document.createElement('div');
     div.className='vote-item'+(state.voteFor===p.id?' selected':'')+(state.voted?' voted-by-me':'');
-    div.innerHTML=`<div style="flex:1;"><div class="vote-name">${p.name}</div><div class="vote-bar" style="width:${pct}%"></div></div><div class="vote-count">${cnt} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>`;
+    div.innerHTML=`<div style="flex:1;"><div class="vote-name">${p.name}</div></div>${state.voteFor===p.id?'<span style="color:var(--red);font-size:1rem;">✓</span>':''}`;
     if(!state.voted) div.onclick=()=>castVote(p.id);
     list.appendChild(div);
   });
 
-  // Host: if all active players have voted but phase is still 'vote', force advance
-  // (fixes stuck-on-vote bug when the last patchRoom didn't flip the phase)
-  if(state.isHost && cast>=total && room.phase==='vote'){
-    console.log('[host] all votes in, forcing elimination phase');
-    patchRoom(state.roomCode,r=>{ r.phase='elimination'; return r; }).catch(console.error);
+  // Host safety: if all alive players voted but phase didn't flip, force it
+  if(state.isHost && room.phase==='vote'){
+    const alive=Object.values(room.players||{}).filter(p=>!p.eliminated&&!p.banned);
+    const allIn=alive.length>0 && alive.every(p=>(room.votes||{})[p.id]);
+    if(allIn) patchRoom(state.roomCode,r=>{ r.phase='elimination'; return r; }).catch(console.error);
   }
 }
 
@@ -675,9 +780,9 @@ async function castVote(targetId){
   try{
     await patchRoom(state.roomCode,r=>{
       r.votes[state.playerId]=targetId; r.players[state.playerId].voted=true;
-      const act=Object.values(r.players).filter(p=>!p.eliminated&&!p.banned);
-      // Only flip to elimination if ALL active players have voted
-      const allVoted=act.every(p=>r.votes[p.id]);
+      const alive=Object.values(r.players).filter(p=>!p.eliminated&&!p.banned);
+      // Flip to elimination when all alive players have voted
+      const allVoted=alive.length>0 && alive.every(p=>r.votes[p.id]);
       if(allVoted) r.phase='elimination';
       return r;
     });
@@ -690,6 +795,75 @@ async function castVote(targetId){
   }
 }
 
+
+// ════════════════════════════════════════════════════
+//  ELIMINATION ANIMATION
+// ════════════════════════════════════════════════════
+function playEliminationAnimation(playerName, isImpostor){
+  return new Promise(resolve=>{
+    const overlay=document.getElementById('elim-anim-overlay');
+    const stage=document.getElementById('elim-stage');
+    const badge=document.getElementById('elim-anim-badge');
+    const nameEl=document.getElementById('elim-anim-name');
+    const subEl=document.getElementById('elim-anim-sub');
+    const body=document.getElementById('elim-body');
+    const floor=document.getElementById('elim-floor');
+    const particles=document.getElementById('elim-particles');
+
+    // Color: red for impostor, muted yellow for innocent
+    const color=isImpostor?'var(--red)':'var(--orange)';
+    overlay.style.setProperty('--elim-color',isImpostor?'#ff4757':'#ff9f43');
+
+    badge.className='elim-role-badge '+(isImpostor?'impostor':'innocent');
+    badge.textContent=isImpostor?'⚠ IMPOSTOR':'INOCENTE';
+    nameEl.textContent=playerName;
+    subEl.textContent=isImpostor?'El impostor ha sido expulsado.':'Era inocente...';
+
+    // Reset
+    body.classList.remove('falling');
+    floor.classList.remove('show');
+    stage.classList.remove('show');
+    particles.innerHTML='';
+    overlay.classList.add('active');
+
+    // Phase 1: appear (100ms)
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{ stage.classList.add('show'); });
+    });
+
+    // Phase 2: fall (after 800ms)
+    setTimeout(()=>{
+      body.classList.add('falling');
+      floor.classList.add('show');
+    },800);
+
+    // Phase 3: burst particles (after 1300ms)
+    setTimeout(()=>{
+      for(let i=0;i<14;i++){
+        const p=document.createElement('div');
+        p.className='elim-particle';
+        const angle=(i/14)*Math.PI*2;
+        const dist=40+Math.random()*50;
+        const dx=Math.cos(angle)*dist+'px';
+        const dy=Math.sin(angle)*dist+'px';
+        p.style.cssText=`left:50%;top:50%;--dx:${dx};--dy:${dy};animation:burst 0.6s ease forwards;animation-delay:${Math.random()*0.15}s;background:${isImpostor?'var(--red)':'var(--orange)'};`;
+        particles.appendChild(p);
+      }
+    },1350);
+
+    // Phase 4: dismiss after 2.8s total
+    setTimeout(()=>{
+      stage.classList.remove('show');
+      setTimeout(()=>{
+        overlay.classList.remove('active');
+        body.classList.remove('falling');
+        floor.classList.remove('show');
+        particles.innerHTML='';
+        resolve();
+      },350);
+    },2800);
+  });
+}
 // ════════════════════════════════════════════════════
 //  ELIMINATION
 // ════════════════════════════════════════════════════
@@ -711,6 +885,11 @@ async function renderElimination(room){
     div.innerHTML=`<div style="flex:1;"><div class="vote-name">${p.name}${p.id===ePid?' <span style="font-size:0.78rem;color:var(--red);">← eliminado</span>':''}</div><div class="vote-bar" style="width:${pct}%;background:${p.id===ePid?'var(--red)':'var(--muted)'}"></div></div><div class="vote-count" style="${cnt===maxV&&maxV>0?'color:var(--text);font-weight:700;':''}">${cnt} votos</div>`;
     tallyEl.appendChild(div);
   });
+
+  // Play animation for everyone (show THEN process)
+  if(ePid){
+    await playEliminationAnimation(ePlayer?.name||'???', eIsImp);
+  }
 
   if(state.isHost){
     await patchRoom(state.roomCode,r=>{
@@ -927,5 +1106,24 @@ document.getElementById('host-name').addEventListener('keydown',e=>{if(e.key==='
 document.getElementById('join-name').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom();});
 document.getElementById('join-code').addEventListener('keydown',e=>{if(e.key==='Enter')joinRoom();});
 </script>
+
+<!-- ELIMINATION ANIMATION OVERLAY -->
+<div id="elim-anim-overlay">
+  <div class="elim-stage" id="elim-stage">
+    <div class="elim-role-badge innocent" id="elim-anim-badge"></div>
+    <div class="body-scene">
+      <div class="elim-particles" id="elim-particles"></div>
+      <div class="body-figure" id="elim-body">
+        <div class="head"></div>
+        <div class="torso"></div>
+        <div class="legs"><div class="leg"></div><div class="leg"></div></div>
+      </div>
+      <div class="elim-floor" id="elim-floor"></div>
+    </div>
+    <div class="elim-name" id="elim-anim-name"></div>
+    <div class="elim-subtitle" id="elim-anim-sub"></div>
+  </div>
+</div>
+
 </body>
 </html>
