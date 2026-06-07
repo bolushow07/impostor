@@ -270,6 +270,7 @@ create policy "public" on rooms for all using (true) with check (true);</code>
     <div class="timer-display" id="debate-timer"></div>
     <div id="continue-banner" class="continue-banner" style="display:none;"><span>⚠️</span><span id="continue-banner-text"></span></div>
     <div class="privacy-note" style="margin-bottom:1rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Da pistas sobre la palabra sin decirla. Cuando estén listos, el anfitrión abre la votación.</span></div>
+    <div id="speaking-order" style="display:none;margin-bottom:1rem;"></div>
     <div class="status-bar"><div class="pulse"></div><span id="ready-count">Esperando...</span></div>
   </div>
   <button class="btn btn-primary" id="go-vote-btn" onclick="goToVote()" disabled>Ir a votar</button>
@@ -550,10 +551,12 @@ async function startGame(){
   if(customRaw){const c=customRaw.split(',').map(w=>w.trim()).filter(Boolean);if(c.length)wl=[...c,...wl];}
   const word=wl[Math.floor(Math.random()*wl.length)];
   const impostors=shuffle(players.map(p=>p.id)).slice(0,numImp);
+  const speakingOrder=shuffle(players.map(p=>({id:p.id,name:p.name})));
   await patchRoom(state.roomCode,r=>{
     r.phase='reveal'; r.word=word; r.impostors=impostors;
     r.config={impostors:numImp,debateTime:debateT};
     r.votes={}; r.readyCount=0; r.eliminationLog=[]; r.elimResult=null; r.nextPhase=null;
+    r.speakingOrder=speakingOrder;
     Object.keys(r.players).forEach(pid=>{r.players[pid].ready=false;r.players[pid].voted=false;r.players[pid].eliminated=false;});
     return r;
   });
@@ -589,10 +592,36 @@ function renderDebate(room){
   const act=Object.values(room.players).filter(p=>!p.eliminated&&!p.banned);
   document.getElementById('ready-count').textContent=`${room.readyCount||0}/${act.length} jugadores listos`;
   document.getElementById('go-vote-btn').disabled=!state.isHost;
+
+  // Continuation banner
   const log=room.eliminationLog||[];
   const banner=document.getElementById('continue-banner');
   if(log.length>0){const last=log[log.length-1];banner.style.display='flex';document.getElementById('continue-banner-text').textContent=`Ronda ${log.length}: ${last.name} (inocente) eliminado. El impostor sigue entre vosotros.`;}
   else banner.style.display='none';
+
+  // Speaking order — filter out eliminated players
+  const orderEl=document.getElementById('speaking-order');
+  if(orderEl){
+    const activeIds=new Set(act.map(p=>p.id));
+    const order=(room.speakingOrder||[]).filter(p=>activeIds.has(p.id));
+    if(order.length>0){
+      orderEl.innerHTML='';
+      const lbl=document.createElement('div');
+      lbl.style.cssText='font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem;';
+      lbl.textContent='Orden de debate';
+      orderEl.appendChild(lbl);
+      order.forEach((p,i)=>{
+        const div=document.createElement('div');
+        div.style.cssText='display:flex;align-items:center;gap:0.6rem;padding:0.5rem 0.75rem;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:0.4rem;font-size:0.9rem;'+(p.id===state.playerId?'border:1px solid rgba(232,255,71,0.4);':'border:1px solid var(--border);');
+        div.innerHTML=`<span style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:var(--accent);min-width:20px;">${i+1}</span><span>${p.name}${p.id===state.playerId?' <span style=\"color:var(--accent);font-size:0.78rem;\">(tú)</span>':''}</span>`;
+        orderEl.appendChild(div);
+      });
+      orderEl.style.display='block';
+    } else {
+      orderEl.style.display='none';
+    }
+  }
+
   const dt=room.config?.debateTime||0;
   const timerEl=document.getElementById('debate-timer');
   if(dt>0&&!state.debateTimer){
@@ -631,18 +660,34 @@ function renderVote(room){
     if(!state.voted) div.onclick=()=>castVote(p.id);
     list.appendChild(div);
   });
+
+  // Host: if all active players have voted but phase is still 'vote', force advance
+  // (fixes stuck-on-vote bug when the last patchRoom didn't flip the phase)
+  if(state.isHost && cast>=total && room.phase==='vote'){
+    console.log('[host] all votes in, forcing elimination phase');
+    patchRoom(state.roomCode,r=>{ r.phase='elimination'; return r; }).catch(console.error);
+  }
 }
 
 async function castVote(targetId){
   if(state.voted)return;
   state.voted=true; state.voteFor=targetId;
-  await patchRoom(state.roomCode,r=>{
-    r.votes[state.playerId]=targetId; r.players[state.playerId].voted=true;
-    const act=Object.values(r.players).filter(p=>!p.eliminated&&!p.banned);
-    if(Object.keys(r.votes).length>=act.length) r.phase='elimination';
-    return r;
-  });
-  showToast('¡Voto registrado!');
+  try{
+    await patchRoom(state.roomCode,r=>{
+      r.votes[state.playerId]=targetId; r.players[state.playerId].voted=true;
+      const act=Object.values(r.players).filter(p=>!p.eliminated&&!p.banned);
+      // Only flip to elimination if ALL active players have voted
+      const allVoted=act.every(p=>r.votes[p.id]);
+      if(allVoted) r.phase='elimination';
+      return r;
+    });
+    showToast('¡Voto registrado!');
+  }catch(e){
+    // On error reset so they can try again
+    state.voted=false; state.voteFor=null;
+    showToast('Error al votar, intenta de nuevo');
+    console.error(e);
+  }
 }
 
 // ════════════════════════════════════════════════════
@@ -706,7 +751,13 @@ async function afterElimination(){
   const next=room.nextPhase||'debate';
   await patchRoom(state.roomCode,r=>{
     r.phase=next;
-    if(next==='debate'){r.votes={};Object.values(r.players).filter(p=>!p.eliminated&&!p.banned).forEach(p=>{r.players[p.id].voted=false;});}
+    if(next==='debate'){
+      r.votes={};
+      const stillActive=Object.values(r.players).filter(p=>!p.eliminated&&!p.banned);
+      stillActive.forEach(p=>{r.players[p.id].voted=false;});
+      // Regenerate speaking order without eliminated players
+      r.speakingOrder=shuffle(stillActive.map(p=>({id:p.id,name:p.name})));
+    }
     return r;
   });
   if(next==='debate'){if(state.debateTimer){clearInterval(state.debateTimer);state.debateTimer=null;}state.debateTimerRemaining=0;}
@@ -758,7 +809,8 @@ async function leaveGame(){
     }
   }
   if(state.debateTimer){clearInterval(state.debateTimer);}
-  state={playerId:null,playerName:null,roomCode:null,isHost:false,myRole:null,voted:false,voteFor:null,ready:false,debateTimer:null,debateTimerRemaining:0};
+  if(state._voteWatchdog){clearInterval(state._voteWatchdog);}
+  state={playerId:null,playerName:null,roomCode:null,isHost:false,myRole:null,voted:false,voteFor:null,ready:false,debateTimer:null,debateTimerRemaining:0,_voteWatchdog:null};
   lastPhase=null;lastElimResult=null;
   showScreen('home');
 }
@@ -766,7 +818,9 @@ async function leaveGame(){
 function dismissKick(){
   document.getElementById('kicked-overlay').classList.remove('show');
   stopListening();
-  state={playerId:null,playerName:null,roomCode:null,isHost:false,myRole:null,voted:false,voteFor:null,ready:false,debateTimer:null,debateTimerRemaining:0};
+  if(state.debateTimer){clearInterval(state.debateTimer);}
+  if(state._voteWatchdog){clearInterval(state._voteWatchdog);}
+  state={playerId:null,playerName:null,roomCode:null,isHost:false,myRole:null,voted:false,voteFor:null,ready:false,debateTimer:null,debateTimerRemaining:0,_voteWatchdog:null};
   lastPhase=null;lastElimResult=null;
   showScreen('home');
 }
@@ -829,7 +883,24 @@ function onRoomUpdate(room){
     }
     document.getElementById('go-vote-btn').disabled=!state.isHost;
   }
-  if(phase==='vote'){if(lastPhase!=='vote')showScreen('vote');renderVote(room);}
+  if(phase==='vote'){
+    if(lastPhase!=='vote')showScreen('vote');
+    renderVote(room);
+    // Watchdog: if I already voted and phase is still 'vote', re-check every 3s
+    if(state.voted && !state._voteWatchdog){
+      state._voteWatchdog=setInterval(async()=>{
+        const r=await getRoom(state.roomCode);
+        if(!r||r.phase!=='vote'){clearInterval(state._voteWatchdog);state._voteWatchdog=null;return;}
+        const act=Object.values(r.players).filter(p=>!p.eliminated&&!p.banned);
+        const allIn=act.every(p=>r.votes&&r.votes[p.id]);
+        if(allIn&&state.isHost){
+          clearInterval(state._voteWatchdog);state._voteWatchdog=null;
+          await patchRoom(state.roomCode,r2=>{r2.phase='elimination';return r2;}).catch(console.error);
+        }
+      },3000);
+    }
+    if(room.phase!=='vote'&&state._voteWatchdog){clearInterval(state._voteWatchdog);state._voteWatchdog=null;}
+  }
   if(phase==='elimination'){
     if(lastPhase!=='elimination'){lastElimResult=null;renderElimination(room);}
     else if(room.elimResult&&room.elimResult!==lastElimResult){
